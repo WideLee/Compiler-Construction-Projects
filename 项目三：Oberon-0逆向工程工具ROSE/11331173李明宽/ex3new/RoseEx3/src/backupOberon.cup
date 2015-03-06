@@ -1,0 +1,325 @@
+import java_cup.runtime.*;
+import callgraph.*;
+import exceptions.*;
+import java.util.*;
+
+init with {: OberonScanner.init();              :};
+scan with {: return getScanner().next_token(); :};
+
+parser code {:
+    public CallGraph graph = new CallGraph();
+    public Map<String, Integer> int_id = new HashMap<String, Integer>();
+    public Map<String, String> type_id = new HashMap<String, String>();
+    // public Map<String, Boolean> bool_id = new HashMap<String, Boolean>();
+    public int function_count = 0;
+:};
+
+/* Terminals (tokens returned by the scanner). */
+terminal String MODULE, BEGIN, END, CONST, TYPE;
+terminal String VAR, PROCEDURE, RECORD, ARRAY, OF;
+terminal String WHILE, DO, IF, THEN, ELSIF;
+terminal String ELSE, OR, DIV, MOD, IDENTIFIER;
+terminal String ADD, MINUS, MUL, BIG, BIGEQ;
+terminal String LESS, LESSEQ, NOTEQ, EQUAL, AND;
+terminal String NOT, ASSIGN, DOT, LSQBRACKET, RSQBRACKET;
+terminal String LPARENTHESE, RPARENTHESE, COLON, SEMI, COMMA;
+terminal String EOR, ERROR;
+
+terminal Integer NUMBER;
+
+/* Non terminals */
+non terminal module;
+non terminal main;
+non terminal declarations;
+non terminal HashMap<String, Object> declarations_const;
+non terminal HashMap<String, Object> declarations_const_one;
+non terminal HashMap<String, Object> declarations_const_two;
+non terminal declarations_type;
+non terminal declarations_type_one;
+non terminal declarations_type_two;
+non terminal declarations_type_key;
+non terminal declarations_var;
+non terminal declarations_var_one;
+non terminal declarations_var_two;
+non terminal declarations_var_key;
+non terminal declarations_procedure;
+non terminal declarations_procedure_one;
+non terminal declarations_procedure_key;
+non terminal procedure_declaration;
+non terminal procedure_body;
+non terminal procedure_body_one;
+non terminal procedure_body_key;
+non terminal procedure_heading;
+non terminal procedure_heading_one;
+non terminal procedure_heading_key;
+non terminal formal_parameters;
+non terminal formal_parameters_one;
+non terminal formal_parameters_two;
+non terminal formal_parameters_three;
+non terminal formal_parameters_four;
+non terminal formal_parameters_key;
+non terminal fp_section;
+non terminal fp_section_one;
+non terminal String type;
+non terminal record_type;
+non terminal record_type_one;
+non terminal record_type_two;
+non terminal record_type_key; 
+non terminal field_list;
+non terminal field_list_key;
+non terminal array_type;
+non terminal identifier_list;
+non terminal identifier_list_one;
+non terminal identifier_list_two;
+non terminal identifier_list_key;
+non terminal statement_sequence;
+non terminal statement_sequence_one;
+non terminal statement_sequence_two;
+non terminal statement_sequence_key; 
+non terminal statement;
+non terminal statement_one;
+non terminal while_statement;
+non terminal if_statement;
+non terminal if_statement_elseif;
+non terminal if_statement_elseif_one;
+non terminal if_statement_elseif_key;
+non terminal if_statement_else;
+non terminal if_statement_else_one;
+non terminal procedure_call;
+non terminal procedure_call_one;
+non terminal actual_parameters;
+non terminal actual_parameters_one;
+non terminal actual_parameters_two;
+non terminal actual_parameters_three;
+non terminal actual_parameters_four;
+non terminal actual_parameters_key;
+non terminal assignment;
+non terminal expression;
+non terminal expression_one;
+non terminal expression_two;
+non terminal operator_one;
+non terminal simple_expression;
+non terminal simple_expression_one;
+non terminal simple_expression_two;
+non terminal simple_expression_key;
+non terminal operator_two;
+non terminal operator_three; 
+non terminal term;
+non terminal term_one;
+non terminal term_two;
+non terminal term_key;
+non terminal operator_four;
+non terminal factor;
+non terminal selector;
+non terminal selector_one;
+non terminal selector_key;
+
+precedence right ASSIGN;
+precedence left OR;
+precedence left AND;
+precedence right NOT;
+precedence left EQUAL, NOTEQ, LESS, LESSEQ, BIG, BIGEQ;
+precedence left ADD, MINUS;
+precedence left MUL, DIV, MOD;
+precedence left LPARENTHESE;
+
+/* The grammar */
+module                     ::= MODULE IDENTIFIER:id1 SEMI 
+{: 
+    System.out.println("Module Name is " + id1); 
+:}
+	                       declarations main END IDENTIFIER:id2 DOT
+{:
+    if(!id2.equals(id1)){
+	throw new MismatchedBlockIdException(((OberonScanner) parser.getScanner()).getLine(), ((OberonScanner) parser.getScanner()).getColumn());
+    }
+    System.out.println("Parsering Succeed! Show Call Graph..."); 
+    parser.graph.show();
+:};
+
+main                       ::= | BEGIN statement_sequence;
+
+declarations               ::= declarations_const declarations_type
+		               declarations_var declarations_procedure;
+
+declarations_const         ::= 
+{:
+    HashMap<String ,String> const_id = new HashMap<>();
+    RESULT = const_id;
+:}
+                               | CONST declarations_const_one:const_one
+{:
+    RESULT = const_one;
+:};
+declarations_const_one     ::= 
+{:
+    HashMap<String ,String> const_id = new HashMap<>();
+    RESULT = const_id;
+:}
+                               | declarations_const_two:const_two
+{:
+    RESULT = const_two;
+:};
+declarations_const_two     ::= declarations_const_two:const_two declarations_const_key:const_key
+{:
+    const_two.put(const_key);
+:}		               
+                               | declarations_const_key:const_key_2
+{:
+    RESULT = const_key_2;
+:}; 
+declarations_const_key     ::= IDENTIFIER:id EQUAL expression:expr SEMI
+{: 
+    RESULT = 
+:};
+
+declarations_type          ::= | TYPE declarations_type_one;
+declarations_type_one      ::= | declarations_type_two;
+declarations_type_two      ::= declarations_type_two declarations_type_key
+			       | declarations_type_key;
+declarations_type_key      ::= IDENTIFIER:id EQUAL type:tp SEMI
+{:
+    parser.type_id.put(id, tp);
+:};
+
+declarations_var           ::= | VAR declarations_var_one ;
+declarations_var_one       ::= | declarations_var_two ;
+declarations_var_two       ::= declarations_var_two declarations_var_key
+		               | declarations_var_key;
+declarations_var_key       ::= identifier_list:id_list COLON type:tp SEMI;
+
+declarations_procedure     ::= | declarations_procedure_one;
+declarations_procedure_one ::= declarations_procedure_one declarations_procedure_key 
+			       | declarations_procedure_key;
+declarations_procedure_key ::= procedure_declaration SEMI;
+
+procedure_declaration      ::= procedure_heading SEMI procedure_body 
+{:
+    parser.graph.addProcedure("f" + (++function_count), "func"); 
+:};
+
+procedure_body             ::= declarations procedure_body_one END IDENTIFIER;
+procedure_body_one         ::= | procedure_body_key;
+procedure_body_key         ::= BEGIN statement_sequence;
+
+procedure_heading          ::= PROCEDURE IDENTIFIER procedure_heading_one;
+procedure_heading_one      ::= | procedure_heading_key;
+procedure_heading_key      ::= formal_parameters;
+
+formal_parameters          ::= LPARENTHESE formal_parameters_one RPARENTHESE;
+formal_parameters_one      ::= | formal_parameters_two;
+formal_parameters_two      ::= fp_section formal_parameters_three;
+formal_parameters_three    ::= | formal_parameters_four;
+formal_parameters_four     ::= formal_parameters_four formal_parameters_key
+			       | formal_parameters_key;
+formal_parameters_key      ::= SEMI fp_section;
+
+fp_section                 ::= fp_section_one identifier_list COLON type ;
+fp_section_one             ::= | VAR ;
+
+type                       ::= IDENTIFIER:id 
+{:
+    if(!id.equals("INTEGER") && !id.equals("BOOLEAN")){
+	throw new IllegalTypeException(((OberonScanner) parser.getScanner()).getLine(), ((OberonScanner) parser.getScanner()).getColumn());
+    }
+    RESULT = id;
+:}
+                               | array_type 
+                               | record_type;
+
+record_type                ::= RECORD field_list record_type_one END;
+record_type_one            ::= | record_type_two;
+record_type_two            ::= record_type_two record_type_key 
+	                       | record_type_key;
+record_type_key            ::= SEMI field_list ;
+
+field_list                 ::= | field_list_key;
+field_list_key             ::= identifier_list COLON type;
+
+array_type                 ::= ARRAY expression OF type:tp
+{:
+    RESULT = "Array " + tp;
+:};
+
+identifier_list            ::= IDENTIFIER identifier_list_one;
+identifier_list_one        ::= | identifier_list_two;
+identifier_list_two        ::= identifier_list_two identifier_list_key
+			       | identifier_list_key;
+identifier_list_key        ::= COMMA IDENTIFIER;
+
+statement_sequence         ::= statement statement_sequence_one;
+statement_sequence_one     ::= | statement_sequence_two;
+statement_sequence_two     ::= statement_sequence_two statement_sequence_key
+		               | statement_sequence_key;
+statement_sequence_key     ::= SEMI statement;
+
+statement                  ::= | statement_one;
+statement_one              ::= assignment | procedure_call | if_statement | while_statement;
+
+while_statement            ::= WHILE expression DO statement_sequence END ;
+
+if_statement               ::= IF expression THEN statement_sequence if_statement_elseif if_statement_else END;
+if_statement_elseif        ::= | if_statement_elseif_one;
+if_statement_elseif_one    ::= if_statement_elseif_one if_statement_elseif_key
+			       | if_statement_elseif_key;
+if_statement_elseif_key    ::= ELSIF expression THEN statement_sequence;
+if_statement_else          ::= | if_statement_else_one;
+if_statement_else_one      ::= ELSE statement_sequence;
+
+procedure_call             ::= IDENTIFIER:e procedure_call_one 
+{:
+    parser.graph.addCallSite("c1", e, "return *");
+    parser.graph.addEdge("c1", "f1");
+:};
+procedure_call_one         ::= | actual_parameters;
+
+actual_parameters          ::= LPARENTHESE actual_parameters_one RPARENTHESE;
+actual_parameters_one      ::= | actual_parameters_two;
+actual_parameters_two      ::= expression actual_parameters_three;
+actual_parameters_three    ::= | actual_parameters_four;
+actual_parameters_four     ::= actual_parameters_four actual_parameters_key
+                               | actual_parameters_key;
+actual_parameters_key      ::= COMMA expression;
+
+assignment                 ::= IDENTIFIER selector ASSIGN expression;
+
+expression                 ::= simple_expression expression_one;
+expression_one             ::= | expression_two;
+expression_two             ::= operator_one simple_expression;
+operator_one               ::= EQUAL | NOTEQ | LESS | LESSEQ | BIG | BIGEQ;
+
+simple_expression          ::= operator_two term simple_expression_one;
+simple_expression_one      ::= | simple_expression_two;
+simple_expression_two      ::= simple_expression_two simple_expression_key
+						| simple_expression_key;
+simple_expression_key      ::= operator_three term;
+operator_two               ::= | ADD | MINUS;
+operator_three             ::= ADD | MINUS | OR;
+
+term                       ::= factor term_one;
+term_one                   ::= | term_two;
+term_two                   ::= term_two term_key | term_key;
+term_key                   ::= operator_four factor;
+operator_four              ::= MUL | DIV | MOD | AND ;
+
+factor                     ::= IDENTIFIER selector | NUMBER 
+		               | LPARENTHESE expression RPARENTHESE 
+		               | NOT factor; 
+
+selector                   ::= | selector_one;
+selector_one               ::= selector_one selector_key | selector_key;
+selector_key               ::= DOT IDENTIFIER 
+			       | LSQBRACKET expression RSQBRACKET;
+
+
+
+
+
+
+
+
+
+
+
+
+

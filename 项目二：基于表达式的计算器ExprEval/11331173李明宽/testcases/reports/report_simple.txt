@@ -1,0 +1,561 @@
+Testing Procedure
+========================================================
+OpStack: $ 
+ValStack: 
+Action: 1
+OpStack: $ 9 
+ValStack: 
+Action: 9
+OpStack: $ 
+ValStack: 9 
+Action: 1
+OpStack: $ - 
+ValStack: 9 
+Action: 1
+OpStack: $ - 3 
+ValStack: 9 
+Action: 9
+OpStack: $ - 
+ValStack: 9 3 
+Action: 1
+OpStack: $ - * 
+ValStack: 9 3 
+Action: 1
+OpStack: $ - * 2 
+ValStack: 9 3 
+Action: 9
+OpStack: $ - * 
+ValStack: 9 3 2 
+Action: 2
+OpStack: $ - 6.0 
+ValStack: 9 
+Action: 9
+OpStack: $ - 
+ValStack: 9 6.0 
+Action: 2
+OpStack: $ 3.0 
+ValStack: 
+Action: 9
+OpStack: $ 
+ValStack: 3.0 
+Action: 0
+
+C001 A simple expression.
+Input: 9 - 3 * 2
+Expected output: 3
+Passed !
+OpStack: $ 
+ValStack: 
+Action: 1
+OpStack: $ 2.25e+2 
+ValStack: 
+Action: 9
+OpStack: $ 
+ValStack: 2.25e+2 
+Action: 1
+OpStack: $ - 
+ValStack: 2.25e+2 
+Action: 1
+OpStack: $ - ( 
+ValStack: 2.25e+2 
+Action: 1
+OpStack: $ - ( 55.5 
+ValStack: 2.25e+2 
+Action: 9
+OpStack: $ - ( 
+ValStack: 2.25e+2 55.5 
+Action: 1
+OpStack: $ - ( + 
+ValStack: 2.25e+2 55.5 
+Action: 1
+OpStack: $ - ( + 4 
+ValStack: 2.25e+2 55.5 
+Action: 9
+OpStack: $ - ( + 
+ValStack: 2.25e+2 55.5 4 
+Action: 1
+OpStack: $ - ( + * 
+ValStack: 2.25e+2 55.5 4 
+Action: 1
+OpStack: $ - ( + * ( 
+ValStack: 2.25e+2 55.5 4 
+Action: 1
+OpStack: $ - ( + * ( 10 
+ValStack: 2.25e+2 55.5 4 
+Action: 9
+OpStack: $ - ( + * ( 
+ValStack: 2.25e+2 55.5 4 10 
+Action: 1
+OpStack: $ - ( + * ( / 
+ValStack: 2.25e+2 55.5 4 10 
+Action: 1
+OpStack: $ - ( + * ( / 2 
+ValStack: 2.25e+2 55.5 4 10 
+Action: 9
+OpStack: $ - ( + * ( / 
+ValStack: 2.25e+2 55.5 4 10 2 
+Action: 2
+OpStack: $ - ( + * ( 5.0 
+ValStack: 2.25e+2 55.5 4 
+Action: 9
+OpStack: $ - ( + * ( 
+ValStack: 2.25e+2 55.5 4 5.0 
+Action: 1
+OpStack: $ - ( + * ( ) 
+ValStack: 2.25e+2 55.5 4 5.0 
+Action: 4
+OpStack: $ - ( + * 
+ValStack: 2.25e+2 55.5 4 5.0 
+Action: 1
+OpStack: $ - ( + * ^ 
+ValStack: 2.25e+2 55.5 4 5.0 
+Action: 1
+OpStack: $ - ( + * ^ 2 
+ValStack: 2.25e+2 55.5 4 5.0 
+Action: 9
+OpStack: $ - ( + * ^ 
+ValStack: 2.25e+2 55.5 4 5.0 2 
+Action: 2
+OpStack: $ - ( + * 25.0 
+ValStack: 2.25e+2 55.5 4 
+Action: 9
+OpStack: $ - ( + * 
+ValStack: 2.25e+2 55.5 4 25.0 
+Action: 2
+OpStack: $ - ( + 100.0 
+ValStack: 2.25e+2 55.5 
+Action: 9
+OpStack: $ - ( + 
+ValStack: 2.25e+2 55.5 100.0 
+Action: 2
+OpStack: $ - ( 155.5 
+ValStack: 2.25e+2 
+Action: 9
+OpStack: $ - ( 
+ValStack: 2.25e+2 155.5 
+Action: 1
+OpStack: $ - ( ) 
+ValStack: 2.25e+2 155.5 
+Action: 4
+OpStack: $ - 
+ValStack: 2.25e+2 155.5 
+Action: 2
+OpStack: $ 69.5 
+ValStack: 
+Action: 9
+OpStack: $ 
+ValStack: 69.5 
+Action: 0
+
+C002 Expression with arithmetic operations.
+Input: 2.25E+2 - (55.5 + 4 * (10 / 2) ^ 2)
+Expected output: 69.5
+Passed !
+OpStack: $ 
+ValStack: 
+Action: 1
+OpStack: $ 65 
+ValStack: 
+Action: 9
+OpStack: $ 
+ValStack: 65 
+Action: 1
+OpStack: $ / 
+ValStack: 65 
+Action: 1
+OpStack: $ / 5 
+ValStack: 65 
+Action: 9
+OpStack: $ / 
+ValStack: 65 5 
+Action: 2
+OpStack: $ 13.0 
+ValStack: 
+Action: 9
+OpStack: $ 
+ValStack: 13.0 
+Action: 1
+OpStack: $ - 
+ValStack: 13.0 
+Action: 1
+OpStack: $ - 130e-1 
+ValStack: 13.0 
+Action: 9
+OpStack: $ - 
+ValStack: 13.0 130e-1 
+Action: 2
+OpStack: $ 0.0 
+ValStack: 
+Action: 9
+OpStack: $ 
+ValStack: 0.0 
+Action: 0
+
+C003 Expression with arithmetic operations.
+Input: 65 / 5 - 130e-1
+Expected output: 0.0
+Passed !
+OpStack: $ 
+ValStack: 
+Action: 1
+OpStack: $ ( 
+ValStack: 
+Action: 1
+OpStack: $ ( 2 
+ValStack: 
+Action: 9
+OpStack: $ ( 
+ValStack: 2 
+Action: 1
+OpStack: $ ( + 
+ValStack: 2 
+Action: 1
+OpStack: $ ( + 3 
+ValStack: 2 
+Action: 9
+OpStack: $ ( + 
+ValStack: 2 3 
+Action: 2
+OpStack: $ ( 5.0 
+ValStack: 
+Action: 9
+OpStack: $ ( 
+ValStack: 5.0 
+Action: 1
+OpStack: $ ( ) 
+ValStack: 5.0 
+Action: 4
+OpStack: $ 
+ValStack: 5.0 
+Action: 1
+OpStack: $ ^ 
+ValStack: 5.0 
+Action: 1
+OpStack: $ ^ 3 
+ValStack: 5.0 
+Action: 9
+OpStack: $ ^ 
+ValStack: 5.0 3 
+Action: 2
+OpStack: $ 125.0 
+ValStack: 
+Action: 9
+OpStack: $ 
+ValStack: 125.0 
+Action: 1
+OpStack: $ ) 
+ValStack: 125.0 
+Action: 4
+
+E001 Left parenthesis expected.
+Input: (2 + 3) ^ 3) - ((1 + 1)
+Expected output: MissingLeftParenthesisException
+Passed !
+OpStack: $ 
+ValStack: 
+Action: 1
+OpStack: $ ( 
+ValStack: 
+Action: 1
+OpStack: $ ( ( 
+ValStack: 
+Action: 1
+OpStack: $ ( ( 2 
+ValStack: 
+Action: 9
+OpStack: $ ( ( 
+ValStack: 2 
+Action: 1
+OpStack: $ ( ( + 
+ValStack: 2 
+Action: 1
+OpStack: $ ( ( + 3 
+ValStack: 2 
+Action: 9
+OpStack: $ ( ( + 
+ValStack: 2 3 
+Action: 2
+OpStack: $ ( ( 5.0 
+ValStack: 
+Action: 9
+OpStack: $ ( ( 
+ValStack: 5.0 
+Action: 1
+OpStack: $ ( ( ) 
+ValStack: 5.0 
+Action: 4
+OpStack: $ ( 
+ValStack: 5.0 
+Action: 1
+OpStack: $ ( ^ 
+ValStack: 5.0 
+Action: 1
+OpStack: $ ( ^ ( 
+ValStack: 5.0 
+Action: 1
+OpStack: $ ( ^ ( ( 
+ValStack: 5.0 
+Action: 1
+OpStack: $ ( ^ ( ( 3 
+ValStack: 5.0 
+Action: 9
+OpStack: $ ( ^ ( ( 
+ValStack: 5.0 3 
+Action: 1
+OpStack: $ ( ^ ( ( - 
+ValStack: 5.0 3 
+Action: 1
+OpStack: $ ( ^ ( ( - 1 
+ValStack: 5.0 3 
+Action: 9
+OpStack: $ ( ^ ( ( - 
+ValStack: 5.0 3 1 
+Action: 2
+OpStack: $ ( ^ ( ( 2.0 
+ValStack: 5.0 
+Action: 9
+OpStack: $ ( ^ ( ( 
+ValStack: 5.0 2.0 
+Action: 1
+OpStack: $ ( ^ ( ( ) 
+ValStack: 5.0 2.0 
+Action: 4
+OpStack: $ ( ^ ( 
+ValStack: 5.0 2.0 
+Action: 1
+OpStack: $ ( ^ ( + 
+ValStack: 5.0 2.0 
+Action: 1
+OpStack: $ ( ^ ( + 1 
+ValStack: 5.0 2.0 
+Action: 9
+OpStack: $ ( ^ ( + 
+ValStack: 5.0 2.0 1 
+Action: 2
+OpStack: $ ( ^ ( 3.0 
+ValStack: 5.0 
+Action: 9
+OpStack: $ ( ^ ( 
+ValStack: 5.0 3.0 
+Action: 1
+OpStack: $ ( ^ ( ) 
+ValStack: 5.0 3.0 
+Action: 4
+OpStack: $ ( ^ 
+ValStack: 5.0 3.0 
+Action: 2
+OpStack: $ ( 125.0 
+ValStack: 
+Action: 9
+OpStack: $ ( 
+ValStack: 125.0 
+Action: -4
+
+E002 Right parenthesis expected.
+Input: ((2 + 3) ^ ((3 - 1) + 1)
+Expected output: MissingRightParenthesisException
+Passed !
+OpStack: $ 
+ValStack: 
+Action: 1
+OpStack: $ ( 
+ValStack: 
+Action: 1
+OpStack: $ ( 1 
+ValStack: 
+Action: 9
+OpStack: $ ( 
+ValStack: 1 
+Action: 1
+OpStack: $ ( + 
+ValStack: 1 
+Action: 1
+OpStack: $ ( + 2 
+ValStack: 1 
+Action: 9
+OpStack: $ ( + 
+ValStack: 1 2 
+Action: 2
+OpStack: $ ( 3.0 
+ValStack: 
+Action: 9
+OpStack: $ ( 
+ValStack: 3.0 
+Action: 1
+OpStack: $ ( ) 
+ValStack: 3.0 
+Action: 4
+OpStack: $ 
+ValStack: 3.0 
+Action: 1
+OpStack: $ ^ 
+ValStack: 3.0 
+Action: 1
+OpStack: $ ^ ( 
+ValStack: 3.0 
+Action: 1
+OpStack: $ ^ ( 3 
+ValStack: 3.0 
+Action: 9
+OpStack: $ ^ ( 
+ValStack: 3.0 3 
+Action: 1
+OpStack: $ ^ ( - 
+ValStack: 3.0 3 
+Action: 1
+OpStack: $ ^ ( - 4 
+ValStack: 3.0 3 
+Action: 9
+OpStack: $ ^ ( - 
+ValStack: 3.0 3 4 
+Action: 2
+OpStack: $ ^ ( -1.0 
+ValStack: 3.0 
+Action: 9
+OpStack: $ ^ ( 
+ValStack: 3.0 -1.0 
+Action: 1
+OpStack: $ ^ ( ) 
+ValStack: 3.0 -1.0 
+Action: -5
+
+E003 Operator expected.
+Input: (1 + 2) ^ (3 - 4)  5
+Expected output: MissingOperatorException
+Passed !
+OpStack: $ 
+ValStack: 
+Action: 1
+OpStack: $ ( 
+ValStack: 
+Action: 1
+OpStack: $ ( 1 
+ValStack: 
+Action: 9
+OpStack: $ ( 
+ValStack: 1 
+Action: 1
+OpStack: $ ( + 
+ValStack: 1 
+Action: 1
+OpStack: $ ( + 2 
+ValStack: 1 
+Action: 9
+OpStack: $ ( + 
+ValStack: 1 2 
+Action: 2
+OpStack: $ ( 3.0 
+ValStack: 
+Action: 9
+OpStack: $ ( 
+ValStack: 3.0 
+Action: 1
+OpStack: $ ( ) 
+ValStack: 3.0 
+Action: 4
+OpStack: $ 
+ValStack: 3.0 
+Action: 1
+OpStack: $ ^ 
+ValStack: 3.0 
+Action: 1
+OpStack: $ ^ ( 
+ValStack: 3.0 
+Action: 1
+OpStack: $ ^ ( 3 
+ValStack: 3.0 
+Action: 9
+OpStack: $ ^ ( 
+ValStack: 3.0 3 
+Action: 1
+OpStack: $ ^ ( - 
+ValStack: 3.0 3 
+Action: 2
+OpStack: $ ^ ( 0.0 
+ValStack: 
+Action: 9
+OpStack: $ ^ ( 
+ValStack: 0.0 
+Action: 1
+OpStack: $ ^ ( ) 
+ValStack: 0.0 
+Action: 4
+OpStack: $ ^ 
+ValStack: 0.0 
+Action: 2
+
+E004 Operand expected.
+Input: (1 + 2) ^ (3 - ) + 5
+Expected output: MissingOperandException
+Passed !
+OpStack: $ 
+ValStack: 
+Action: 1
+OpStack: $ 4 
+ValStack: 
+Action: 9
+OpStack: $ 
+ValStack: 4 
+Action: 1
+OpStack: $ / 
+ValStack: 4 
+Action: 1
+OpStack: $ / ( 
+ValStack: 4 
+Action: 1
+OpStack: $ / ( 12 
+ValStack: 4 
+Action: 9
+OpStack: $ / ( 
+ValStack: 4 12 
+Action: 1
+OpStack: $ / ( - 
+ValStack: 4 12 
+Action: 1
+OpStack: $ / ( - 3 
+ValStack: 4 12 
+Action: 9
+OpStack: $ / ( - 
+ValStack: 4 12 3 
+Action: 1
+OpStack: $ / ( - * 
+ValStack: 4 12 3 
+Action: 1
+OpStack: $ / ( - * 4 
+ValStack: 4 12 3 
+Action: 9
+OpStack: $ / ( - * 
+ValStack: 4 12 3 4 
+Action: 2
+OpStack: $ / ( - 12.0 
+ValStack: 4 12 
+Action: 9
+OpStack: $ / ( - 
+ValStack: 4 12 12.0 
+Action: 2
+OpStack: $ / ( 0.0 
+ValStack: 4 
+Action: 9
+OpStack: $ / ( 
+ValStack: 4 0.0 
+Action: 1
+OpStack: $ / ( ) 
+ValStack: 4 0.0 
+Action: 4
+OpStack: $ / 
+ValStack: 4 0.0 
+Action: 2
+
+E005 Divided by 0.
+Input: 4 / (12 - 3 * 4) + 1
+Expected output: DividedByZeroException
+Passed !
+
+--------------------------------------------------------
+Statistics Report (8 test cases):
+
+	Passed case(s): 8 (100.0%)
+	Warning case(s): 0 (0.0%)
+	Failed case(s): 0 (0.0%)
+========================================================
+

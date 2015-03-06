@@ -1,0 +1,133 @@
+(*This is a test program, it has TypeMismatchedException*)
+(********************************************************************)
+(* Sample.obr  Version 1.00  <Fri Dec 20 20:08:53 2013>             *)
+(*                                                                  *)
+(* Copyright(C) 2011-2012 LiMingkuan(11331173)  All rights reserved.*)
+(* LiMingkuan is a student majoring in Software Engineering,        *)
+(* from the School of Software,                                     *) 
+(* SUN YAT-SEN UNIVERSITY, GZ 510006, P. R. China                   *)
+(********************************************************************)
+
+MODULE Sample;
+
+CONST size = 100;
+
+TYPE UserRecord = RECORD
+		userid : INTEGER;
+		score : INTEGER
+	END;
+
+VAR n, num, what, max, result, i : INTEGER;
+    userList : ARRAY size OF UserRecord;
+    isExit : BOOLEAN;
+	
+PROCEDURE Maximum(n : INTEGER; a : ARRAY size OF UserRecord; VAR maxIndex : INTEGER);
+VAR i : INTEGER;
+
+BEGIN
+	maxIndex := 1 > 2;
+	i := 1;
+	WHILE i < n DO
+		IF a[i].score > a[maxIndex].score THEN 
+			maxIndex := i;
+		END;
+		i := i + 1;
+	END;
+END Maximum;
+
+PROCEDURE Fib(n : INTEGER; VAR result : INTEGER);
+VAR i, fib1, fib2 : INTEGER;
+
+BEGIN
+	IF n = 1 THEN
+		result := 1;
+	ELSIF n = 2 THEN
+		result := 1
+	ELSE
+		fib1 := 1;
+		fib2 := 1;
+		i := 2;
+		WHILE i < n DO
+			result := fib1 + fib2;
+			fib1 := fib2;
+			fib2 := result;
+			i := i + 1;
+		END;
+	END;
+END Fib;
+
+PROCEDURE Fun1(a : INTEGER);
+
+BEGIN
+	Write(a);
+	WriteLn();
+END Fun1;
+
+PROCEDURE Fun2(a : INTEGER);
+VAR i : INTEGER;
+
+BEGIN
+	Write(a);
+	WriteLn();
+	i := 0;
+	WHILE i < a DO
+		Fun1(i);
+		i := i + 1;
+	END;
+END Fun2;
+
+PROCEDURE Fun3(a : INTEGER);
+VAR i : INTEGER;
+
+BEGIN
+	Write(a);
+	WriteLn();
+	i := 0;
+	WHILE i < a DO
+		Fun2(i);
+		i := i + 1;
+	END;
+END Fun3;
+
+BEGIN
+
+num := 012345;
+
+WHILE ~isExit DO
+
+	WriteLn();
+
+	Read(what);
+	IF what = 1 THEN
+
+		Read(n);
+
+		WriteLn();
+		i := 0;
+		WHILE i < n DO
+			userList[i].userid := i + 1;
+			Read(userList[i].score);
+			i := i + 1;
+		END;
+
+		Maximum(n, userList, max);
+
+		Write(userList[max].userid);
+		WriteLn();
+		Write(userList[max].score);
+		WriteLn();
+	ELSIF what = 2 THEN
+
+		WriteLn();
+		Read(n);
+		Fib(n, result);
+		Write(result);
+		WriteLn();
+	ELSIF what = 3 THEN
+		Fun3(4);
+	ELSE
+		isExit := ~isExit;
+	END;
+END;
+
+END Sample.

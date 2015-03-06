@@ -1,0 +1,342 @@
+Now, testing the Lexcial errors.
+Test-001
+Begin parsering...
+Module name is test
+
+Illegal Symbols have been found.
+The error position is Line 3 Column 0
+Test-002
+Begin parsering...
+Module name is test
+
+The integer is illegal.
+The error position is Line 3 Column 17
+Test-003
+Begin parsering...
+Module name is test
+
+The integer's length is too long.
+The error position is Line 3 Column 17
+Test-004
+Begin parsering...
+Module name is test
+
+The integer's length is too long.
+The error position is Line 3 Column 17
+Test-005
+Begin parsering...
+Module name is test
+
+The octal integer  is illegal.
+The error position is Line 3 Column 17
+Test-006
+Begin parsering...
+Module name is test
+
+Identifier's length is too long.
+The error position is Line 4 Column 37
+Test-007
+Begin parsering...
+
+Comment is Mismatched.
+The error position is Line 2 Column 0
+Test-008
+Begin parsering...
+
+Comment is Mismatched.
+The error position is Line 2 Column 0
+Test-009
+Begin parsering...
+Module name is test
+
+Illegal Symbols have been found.
+The error position is Line 3 Column 18
+Test-010
+Begin parsering...
+Module name is sample
+
+Illegal Symbols have been found.
+The error position is Line 11 Column 0
+Test-011
+Begin parsering...
+Module name is sample
+
+The integer is illegal.
+The error position is Line 28 Column 6
+Test-012
+Begin parsering...
+Module name is sample
+
+The integer's length is too long.
+The error position is Line 12 Column 13
+Test-013
+Begin parsering...
+Module name is sample
+
+The octal integer  is illegal.
+The error position is Line 93 Column 7
+Test-014
+Begin parsering...
+Module name is sample
+
+Identifier's length is too long.
+The error position is Line 12 Column 6
+Test-015
+Begin parsering...
+
+Comment is Mismatched.
+The error position is Line 9 Column 0
+Test-016
+Begin parsering...
+Module name is sample
+
+The integer is illegal.
+The error position is Line 12 Column 13
+Test-017
+Begin parsering...
+Module name is sample
+
+Comment is Mismatched.
+The error position is Line 39 Column 0
+Test-018
+Begin parsering...
+
+Comment is Mismatched.
+The error position is Line 9 Column 70
+Test-019
+Begin parsering...
+Module name is sample
+
+The octal integer  is illegal.
+The error position is Line 12 Column 13
+请按任意键继续. . .
+Now, testing the Syntactic errors.
+Test-001
+Begin parsering...
+Module name is factorial
+
+Type has been mismatched.
+The error position is Line 8 Column 23
+Test-002
+Begin parsering...
+Module name is factorial
+Const variable must be integer
+
+Type has been mismatched.
+The error position is Line 3 Column 22
+Test-003
+Begin parsering...
+Module name is factorial
+Missing end of module
+
+Syntax error has been found.
+The error position is Line 29 Column 11
+Test-004
+Begin parsering...
+Module name is factorial
+Unexpected ";"
+
+Syntax error has been found.
+The error position is Line 29 Column 12
+Test-005
+Begin parsering...
+Module name is factorial
+Unexpected "*"
+
+Syntax error has been found.
+The error position is Line 11 Column 18
+Test-006
+Begin parsering...
+Module name is factorial
+Unexpected "i", it wants a "END".
+
+Syntax error has been found.
+The error position is Line 11 Column 20
+Test-007
+Begin parsering...
+Module name is factorial
+Unexpected "VAR", it wants a ";".
+
+Missing semicolon.
+The error position is Line 6 Column 8
+Test-008
+Begin parsering...
+Module name is factorial
+
+Block identifier is Mismatched.
+The error position is Line 28 Column 4
+Test-009
+Begin parsering...
+Module name is factorial
+
+Block identifier is Mismatched.
+The error position is Line 18 Column 0
+Test-010
+Begin parsering...
+Module name is sample
+Unexpected "n", it wants a ";".
+
+Missing semicolon.
+The error position is Line 24 Column 18
+Test-011
+Begin parsering...
+Module name is sample
+Unexpected "i", it wants a "END".
+
+Syntax error has been found.
+The error position is Line 87 Column 7
+Test-012
+Begin parsering...
+Module name is sample
+Unexpected "*", it wants a "END".
+
+Syntax error has been found.
+The error position is Line 126 Column 11
+Test-013
+Begin parsering...
+Module name is sample
+Unexpected "BEGIN", it wants a ")".
+
+Miss right parenthesis.
+ The error position is Line 27 Column 0
+Test-014
+Begin parsering...
+Module name is sample
+Unexpected ";", it wants a ")".
+
+Miss right parenthesis.
+ The error position is Line 87 Column 9
+Test-015
+Begin parsering...
+Module name is sample
+Unexpected ";", it wants a ")".
+
+Miss right parenthesis.
+ The error position is Line 127 Column 14
+Test-016
+Begin parsering...
+Module name is sample
+Unexpected "write", it wants a "END".
+
+Syntax error has been found.
+The error position is Line 116 Column 2
+Test-017
+Begin parsering...
+Module name is sample
+Unexpected "2", it wants a ")".
+
+Miss right parenthesis.
+ The error position is Line 127 Column 13
+Test-018
+Begin parsering...
+Module name is sample
+Unexpected ";"
+
+Syntax error has been found.
+The error position is Line 13 Column 13
+Test-019
+Begin parsering...
+Module name is sample
+Unexpected "ELSIF", it wants a "END".
+
+Syntax error has been found.
+The error position is Line 118 Column 1
+请按任意键继续. . .
+Now, testing the Semantic errors.
+Test-001
+Begin parsering...
+Module name is factorial
+
+Identifier is Conflict.You have define the i
+The error position is Line 4 Column 15
+Test-002
+Begin parsering...
+Module name is factorial
+
+The number of parameters is incorrect.
+The error position is Line 19 Column 17
+Test-003
+Begin parsering...
+Module name is factorial
+
+Identifier is Conflict.You have define the i
+The error position is Line 18 Column 4
+Test-004
+Begin parsering...
+Module name is factorial
+
+Identifier is Conflict.You have define the i
+The error position is Line 4 Column 25
+Test-005
+Begin parsering...
+Module name is factorial
+
+Type has been mismatched.
+The error position is Line 20 Column 15
+Test-006
+Begin parsering...
+Module name is factorial
+
+Undefine identifier.
+ The error position is Line 7 Column 22
+Test-007
+Begin parsering...
+Module name is factorial
+
+Identifier is Conflict.You have define the i
+The error position is Line 6 Column 29
+Test-008
+Begin parsering...
+Module name is factorial
+
+Undefine identifier.
+ The error position is Line 10 Column 8
+Test-009
+Begin parsering...
+Module name is sample
+
+Type has been mismatched.
+The error position is Line 28 Column 18
+Test-010
+Begin parsering...
+Module name is sample
+
+Type has been mismatched.
+The error position is Line 101 Column 9
+Test-011
+Begin parsering...
+Module name is sample
+
+Type has been mismatched.
+The error position is Line 113 Column 31
+Test-012
+Begin parsering...
+Module name is sample
+
+The number of parameters is incorrect.
+The error position is Line 113 Column 23
+Test-013
+Begin parsering...
+Module name is sample
+
+The number of parameters is incorrect.
+The error position is Line 74 Column 11
+Test-014
+Begin parsering...
+Module name is sample
+
+The number of parameters is incorrect.
+The error position is Line 123 Column 20
+Test-015
+Begin parsering...
+Module name is sample
+
+The number of parameters is incorrect.
+The error position is Line 127 Column 7
+Test-016
+Begin parsering...
+Module name is sample
+
+Type has been mismatched.
+The error position is Line 113 Column 21
+请按任意键继续. . .

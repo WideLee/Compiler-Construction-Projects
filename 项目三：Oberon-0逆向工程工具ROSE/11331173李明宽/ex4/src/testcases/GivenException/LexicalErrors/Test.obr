@@ -1,0 +1,57 @@
+(* An Oberon-0 Program to provide three functions: 1-MaximumNum, 2-MinimumNum, 3-Factorial.*)
+MODULE Test;
+    TYPE NUMBER = INTEGER;
+    VAR firstnum, secondnum, choice : NUMBER;
+
+    PROCEDURE MaximumNum (a, b: NUMBER);
+        VAR max: NUMBER;
+    BEGIN
+        IF a >= b THEN
+            max := a
+        ELSE
+            max := b
+        END;
+        Write(max); 
+        WriteLn
+    END MaximumNum;
+    
+    PROCEDURE MinimumNum (a, b: NUMBER);
+        VAR min: NUMBER;
+    BEGIN
+        IF a <= b THEN
+            min := a
+        ELSE
+            min := b
+        END;
+        Write(min); 
+        WriteLn
+    END MinimumNum;
+    
+
+    PROCEDURE Factorial (n: NUMBER);
+        VAR i,j: NUMBER;
+    BEGIN
+        i := 1;
+        j := 1;
+        WHILE i <= n DO
+            j := i * j;
+            i := i + 1
+        END;
+    Write(j); 
+    WriteLn
+    END Factorial;
+   
+BEGIN
+    Read(firstnum);
+    Read(secondnum);
+    Read(choice);
+ 
+    IF choice = 1 THEN
+        MaximumNum(firstnum, secondnum)
+    ELSIF choice = 2 THEN
+        MinimumNum(firstnum, secondnum)
+    ELSE
+        Fatorial(firstnum);
+        Fatorial(secondnum)
+    END;
+END Test.

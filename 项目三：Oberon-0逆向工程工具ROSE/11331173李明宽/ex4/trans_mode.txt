@@ -1,0 +1,72 @@
+parse                  -> module ;
+module                 -> "MODULE" IDENTIFIER ";" declaration module_key "END" ".";
+module_key             ->  | "BEGIN" statement;
+
+declaration            -> const_declarations type_declarations var_declarations procedure_declarations;
+const_declarations     ->  | "CONST" const_declarations_key;
+const_declarations_key ->  | IDENTIFIER "=" expression ";" const_declarations_key;
+type_declarations      ->  | "TYPE" type_declarations_key;
+type_declarations_key  ->  | IDENTIFIER "=" type ";" type_declarations_key;
+var_declarations       ->  | "VAR" var_declarations_key;
+var_declarations_key   ->  | identifier_list ":" type ";" var_declarations_key;
+
+procedure_declarations ->  | "PROCEDURE" procedure_heading procedure_body procedure_declarations;
+procedure_body         -> declaration procedure_body_key "END" IDENTIFIER ";" ;
+procedure_body_key     ->  | "BEGIN" statement;
+procedure_heading      -> IDNETIGIER formal_parameters ";" ;
+formal_parameters      ->  | "(" fp_section fp_section_key ")" ;
+fp_section             -> var_key identifier_list ":" type ;
+var_key                ->  | "VAR";
+fp_section_key         ->  | ";" fp_section fp_section_key ;
+
+type                   -> INTEGER 
+                                  | BOOLEAN 
+								  | array_type 
+								  | record_type 
+								  | IDENTIFIER;
+array_type             -> "ARRAY" expression "OF" type;
+record_type            -> "RECORD" field_list field_list_key "END";
+field_list             -> identifier_list ":" type ;
+field_list_key         ->  | ";" field_list field_list_key ;
+
+statement              -> if_statement statement_key
+                                  | while_statement statement_key
+								  | selector ":=" expression statement_key
+								  | procedure_call statement_key;
+statement_key          ->  | ";" statement;
+
+procedure_call         -> IDENTIFIER "(" actual_parameters actual_parameters_key ")";
+actual_parameters      ->  | expression;
+actual_parameters_key  ->  | ";" actual_parameters actual_parameters_key;
+
+if_statement           -> "IF" expression "THEN" statement elseif_statement else_statement "END";
+elseif_statement       ->  | "ELSIF" expression "THEN" statement elseif_statement else_statement;
+else_statement         ->  | "ELSE" statement;
+
+while_statement        -> "WHILE" expression "DO" statement "END";
+
+identifier_list        -> IDENTIFIER identifier_list_key;
+identifier_list_key    ->  | "," IDENTIFIER identifier_list_key;
+
+expression             -> simple_expression 
+                                  | simple_expression operator_1 simple_expression;
+
+simple_expression      -> operator_2 term simple_expression_key;
+simple_expression_key  ->  | operator_3 term simple_expression_key;
+
+term                   -> factor term_key;
+term_key               -> operator_4 factor term_key;
+
+operator_1             -> "=" | "#" | ">" | ">=" | "<" | "<=";
+operator_2             ->  | "+" | "-";
+operator_3             -> "+" | "-" | "OR";
+operator_4             -> "*" | "DIV" | "MOD" | "&";		
+
+factor                 -> NUMBER 
+                                  | "(" expression ")"
+								  | "~" factor
+								  | selector;
+selector               -> IDENTIFIER selector_key;
+selector_key           ->  | "." IDENTIFIER selector_key 
+                                  | "[" expression "]" selector_key;
+						 

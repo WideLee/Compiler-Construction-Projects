@@ -1,0 +1,200 @@
+﻿<?xml version="1.0"?>
+<!-- My super test cases for EvalExpr -->
+<!-- Edit by Li Mingkuan -->
+<test-case-definitions>
+
+
+	<test-case>
+		<id>C001</id>
+		<description>IllegalDecimalException.</description>
+		<input><![CDATA[2e10+2.e-10-10]]></input>
+		<exception>IllegalDecimalException</exception>
+	</test-case>
+	<test-case>
+		<id>C002</id>
+		<description>IllegalDecimalException.</description>
+		<input><![CDATA[10e2.2+20]]></input>
+		<exception>IllegalDecimalException</exception>
+	</test-case>
+	<test-case>
+		<id>C003</id>
+		<description>IllegalDecimalException.</description>
+		<input><![CDATA[10.1/10+sin(1+2.)]]></input>
+		<exception>IllegalDecimalException</exception>
+	</test-case>
+	<test-case>
+		<id>C004</id>
+		<description>IllegalIdentifierException.</description>
+		<input><![CDATA[1+tan(3.14/3)]]></input>
+		<exception>IllegalIdentifierException</exception>
+	</test-case>
+	<test-case>
+		<id>C005</id>
+		<description>IllegalIdentifierException.</description>
+		<input><![CDATA[1+ture?2+2:19-10]]></input>
+		<exception>IllegalIdentifierException</exception>
+	</test-case>
+	<test-case>
+		<id>C006</id>
+		<description>IllegalSymbolException.</description>
+		<input><![CDATA[1 @ 2 + 3 ]]></input>
+		<exception>IllegalSymbolException</exception>
+	</test-case>
+	<test-case>
+		<id>C007</id>
+		<description>MissingOperatorException.</description>
+		<input><![CDATA[(( 2 4 ))]]></input>
+		<exception>MissingOperatorException</exception>
+	</test-case>
+	<test-case>
+		<id>C008</id>
+		<description>MissingOperatorException.</description>
+		<input><![CDATA[(1+ 2) (3-4)-5]]></input>
+		<exception>MissingOperatorException</exception>
+	</test-case>
+	<test-case>
+		<id>C009</id>
+		<description>MissingOperatorException.</description>
+		<input><![CDATA[cos(0.5)12.3e+4]]></input>
+		<exception>MissingOperatorException</exception>
+	</test-case>
+	<test-case>
+		<id>C010</id>
+		<description>MissingOperandException.</description>
+		<input><![CDATA[3.14*2>=2.5*3? 2+3:]]></input>
+		<exception>MissingOperandException</exception>
+	</test-case>
+	<test-case>
+		<id>C011</id>
+		<description>MissingOperandException.</description>
+		<input><![CDATA[sin()]]></input>
+		<exception>MissingOperandException</exception>
+	</test-case>
+	<test-case>
+		<id>C012</id>
+		<description>MissingOperandException.</description>
+		<input><![CDATA[min(1,2,,4)]]></input>
+		<exception>MissingOperandException</exception>
+	</test-case>
+	<test-case>
+		<id>C013</id>
+		<description>MissingLeftParenthesisException.</description>
+		<input><![CDATA[(2+3)^3-(1+1))]]></input>
+		<exception>MissingLeftParenthesisException</exception>
+	</test-case>
+	<test-case>
+		<id>C014</id>
+		<description>MissingRightParenthesisException.</description>
+		<input><![CDATA[(2+3)^3-((1+1)]]></input>
+		<exception>MissingRightParenthesisException</exception>
+	</test-case>
+	<test-case>
+		<id>C015</id>
+		<description>FunctionCallException.</description>
+		<input><![CDATA[1+sin(3.14/2,34)]]></input>
+		<exception>FunctionCallException</exception>
+	</test-case>
+	<test-case>
+		<id>C016</id>
+		<description>FunctionCallException.</description>
+		<input><![CDATA[max5,6,8]]></input>
+		<exception>FunctionCallException</exception>
+	</test-case>
+	<test-case>
+		<id>C017</id>
+		<description>TrinaryOperationException.</description>
+		<input><![CDATA[false ? 9 : true ? 1 : 3 :]]></input>
+		<exception>TrinaryOperationException</exception>
+	</test-case>
+	<test-case>
+		<id>C018</id>
+		<description>EmptyExpressionException.</description>
+		<input><![CDATA[]]>
+		</input>
+		<exception>EmptyExpressionException</exception>
+	</test-case>
+	<test-case>
+		<id>C019</id>
+		<description>EmptyExpressionException.</description>
+		<input><![CDATA[            ]]></input>
+		<exception>EmptyExpressionException</exception>
+	</test-case>
+	<test-case>
+		<id>C020</id>
+		<description>DividedByZeroException.</description>
+		<input><![CDATA[4/(12-max(3*4, 10,4, -6)) + 1]]></input>
+		<exception>DividedByZeroException</exception>
+	</test-case>
+	<test-case>
+		<id>C021</id>
+		<description>TypeMismatchedException.</description>
+		<input><![CDATA[12?34:56]]></input>
+		<exception>TypeMismatchedException</exception>
+	</test-case>
+	<test-case>
+		<id>C022</id>
+		<description>TypeMismatchedException.</description>
+		<input><![CDATA[4^(2.5e3 > 3e3)]]></input>
+		<exception>TypeMismatchedException</exception>
+	</test-case>
+	<test-case>
+		<id>C023</id>
+		<description>TypeMismatchedException.</description>
+		<input><![CDATA[32.5 | 23]]></input>
+		<exception>TypeMismatchedException</exception>
+	</test-case>
+	<test-case>
+		<id>C024</id>
+		<description>TypeMismatchedException.</description>
+		<input><![CDATA[true ? 23.4>4:12]]></input>
+		<exception>TypeMismatchedException</exception>
+	</test-case>
+	<test-case>
+		<id>C025</id>
+		<description>Predefined functions.</description>
+		<input><![CDATA[min(12,3,4,max(1,2,45,6), min(1.2,3,4))]]></input>
+		<output>1.2</output>
+	</test-case>
+	<test-case>
+		<id>C026</id>
+		<description>Negative operator.</description>
+		<input><![CDATA[2---2+2-----3+max(1,--2)]]></input>
+		<output>1</output>
+	</test-case>
+	<test-case>
+		<id>C027</id>
+		<description>Involution operator.</description>
+		<input><![CDATA[2^3^4]]></input>
+		<output>2417851639229258300000000</output>
+	</test-case>
+	<test-case>
+		<id>C028</id>
+		<description>Involution operator.</description>
+		<input><![CDATA[(2^3)^4]]></input>
+		<output>4096</output>
+	</test-case>
+	<test-case>
+		<id>C029</id>
+		<description> Bool operator and select operator.</description>
+		<input><![CDATA[1=2 ? (1>2 ? 2+2 : 435) :( 3<>4 ? 5:1+2 ) ]]></input>
+		<output>5</output>
+	</test-case>
+	<test-case>
+		<id>C030</id>
+		<description> Bool operator and select operator.</description>
+		<input><![CDATA[!(1=2)&3>1?(1>3|4<10?2+2:435):(3<>4?5:1+2) ]]></input>
+		<output>4</output>
+	</test-case>
+	<test-case>
+		<id>C031</id>
+		<description> Bool operator and select operator.</description>
+		<input><![CDATA[!(max(1,2)>min(2,1))?sin(3.14/2): cos(3.14/2)]]></input>
+		<output>0.0008</output>
+	</test-case>
+	<test-case>
+		<id>C031</id>
+		<description> Bool operator and select operator.</description>
+		<input><![CDATA[   sin(3123)^2 + cos(3123)^2]]></input>
+		<output>1</output>
+	</test-case>
+</test-case-definitions>

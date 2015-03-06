@@ -1,0 +1,1139 @@
+import java_cup.runtime.*;
+import callgraph.*;
+import exceptions.*;
+import java.util.*;
+import java.util.Map.*;
+
+init with {: 
+    OberonScanner.init(); 
+    graph.addProcedure("write", "write");
+    graph.addProcedure("read", "read");
+    graph.addProcedure("writeln", "writeLn");
+    func_ali.put("write", "write");
+    func_ali.put("read", "read");
+    func_ali.put("writeln", "writeln");     
+    HashMap<String, Variable> para = new HashMap<>();
+    para.put("something_1", new Variable(IdType.INTEGER));
+    Variable rw = new Variable (IdType.PROCEDURE, para);
+	
+	HashMap<String, Variable> para_2 = new HashMap<>();
+	Variable wln = new Variable (IdType.PROCEDURE, para_2);
+	
+	HashMap<String, Variable> topMap = new HashMap<>();
+	topMap.put("write", rw);
+	topMap.put("read", rw);
+	topMap.put("writeln", wln);
+	idStack.push(topMap);
+:};
+scan with {:
+    return getScanner().next_token(); 
+:};
+
+parser code {:
+    public CallGraph graph = new CallGraph();
+    
+    public Stack<HashMap<String, Variable>> idStack = new Stack<>();
+    public HashMap<String, String> func_ali = new HashMap<>();
+    public HashMap<String, String> edge = new HashMap<>();
+    public String temp;
+    public int index = 0;
+    public HashMap<String, Variable> temp_head = new HashMap<>();
+    int fun_count = 0;
+    HashMap<String, Integer> call_count = new HashMap<>();
+     public void addCallSite(String site, HashMap<String, String> callProc){
+        Iterator<Entry<String, String>> iter = callProc.entrySet().iterator(); 
+        while (iter.hasNext()) { 
+            Entry<String, String> entry = iter.next();
+            graph.addCallSite(entry.getKey(), site, entry.getValue());
+            String id = new String();
+            for(int i = entry.getKey().length() -1; i >= 0; i--) {
+                if(Character.isDigit(entry.getKey().charAt(i))) {
+                    continue;
+                }
+                id = entry.getKey().substring(0, i);
+                break;
+            }
+            edge.put(entry.getKey(),id);
+        } 
+    }
+    public void draw(){
+        Iterator<Entry<String, String>> iter = edge.entrySet().iterator();
+        while (iter.hasNext()) {
+            Entry<String, String> entry = iter.next();
+            try {
+                graph.addEdge(entry.getKey(),func_ali.get(entry.getValue()));
+            } catch (SourceNotFoundException
+                    | TargetNotFoundException e) {
+                e.printStackTrace();
+            }
+        } 
+        graph.show();
+    }
+:};
+
+/* Terminals (tokens returned by the scanner). */
+terminal String MODULE, BEGIN, END, CONST, TYPE;
+terminal String VAR, PROCEDURE, RECORD, ARRAY, OF;
+terminal String WHILE, DO, IF, THEN, ELSIF;
+terminal String ELSE, OR, DIV, MOD, IDENTIFIER;
+terminal String ADD, MINUS, MUL, BIG, BIGEQ;
+terminal String LESS, LESSEQ, NOTEQ, EQUAL, AND;
+terminal String NOT, ASSIGN, DOT, LSQBRACKET, RSQBRACKET;
+terminal String LPARENTHESE, RPARENTHESE, COLON, SEMI, COMMA;
+terminal String BOOLEAN, INTEGER, EOR, ERROR;
+
+terminal Integer NUMBER;
+
+/* Non terminals */
+non terminal HashMap<String, Variable> module;
+non terminal main;
+non terminal HashMap<String, Variable> declarations;
+non terminal HashMap<String, Variable> declarations_const;
+non terminal HashMap<String, Variable> declarations_const_one;
+non terminal HashMap<String, Variable> declarations_const_two;
+non terminal HashMap<String, Variable> declarations_const_key;
+non terminal HashMap<String, Variable> declarations_type;
+non terminal HashMap<String, Variable> declarations_type_one;
+non terminal HashMap<String, Variable> declarations_type_two;
+non terminal HashMap<String, Variable> declarations_type_key;
+non terminal HashMap<String, Variable> declarations_var;
+non terminal HashMap<String, Variable> declarations_var_one;
+non terminal HashMap<String, Variable> declarations_var_two;
+non terminal HashMap<String, Variable> declarations_var_key;
+non terminal HashMap<String, Variable> declarations_procedure;
+non terminal HashMap<String, Variable> declarations_procedure_one;
+non terminal HashMap<String, Variable> declarations_procedure_key;
+non terminal HashMap<String, Variable> procedure_declaration;
+non terminal String procedure_body;
+non terminal HashMap<String, String> procedure_body_one;
+non terminal HashMap<String, String> procedure_body_key;
+non terminal HashMap<String, Variable> procedure_heading;
+non terminal HashMap<String, Variable> procedure_heading_one;
+non terminal HashMap<String, Variable> procedure_heading_key;
+non terminal HashMap<String, Variable> formal_parameters;
+non terminal HashMap<String, Variable> formal_parameters_one;
+non terminal HashMap<String, Variable> formal_parameters_two;
+non terminal HashMap<String, Variable> formal_parameters_three;
+non terminal HashMap<String, Variable> formal_parameters_four;
+non terminal HashMap<String, Variable> formal_parameters_key;
+non terminal HashMap<String, Variable> fp_section;
+non terminal HashMap<String, Variable> fp_section_one;
+non terminal Variable type;
+non terminal HashMap<String, Variable> record_type;
+non terminal HashMap<String, Variable> record_type_one;
+non terminal HashMap<String, Variable> record_type_two;
+non terminal HashMap<String, Variable> record_type_key; 
+non terminal HashMap<String, Variable> field_list;
+non terminal HashMap<String, Variable> field_list_key;
+non terminal Variable array_type;
+non terminal ArrayList<String> identifier_list;
+non terminal ArrayList<String> identifier_list_one;
+non terminal ArrayList<String> identifier_list_two;
+non terminal String identifier_list_key;
+non terminal HashMap<String, String> statement_sequence;
+non terminal HashMap<String, String> statement_sequence_one;
+non terminal HashMap<String, String> statement_sequence_two;
+non terminal HashMap<String, String> statement_sequence_key; 
+non terminal HashMap<String, String> statement;
+non terminal HashMap<String, String> statement_one;
+non terminal HashMap<String, String> while_statement;
+non terminal HashMap<String, String> if_statement;
+non terminal HashMap<String, String> if_statement_elseif;
+non terminal HashMap<String, String> if_statement_elseif_one;
+non terminal HashMap<String, String> if_statement_elseif_key;
+non terminal HashMap<String, String> if_statement_else;
+non terminal HashMap<String, String> if_statement_else_one;
+non terminal HashMap<String, String> procedure_call;
+non terminal ArrayList<Variable> procedure_call_one;
+non terminal ArrayList<Variable> actual_parameters;
+non terminal ArrayList<Variable> actual_parameters_one;
+non terminal ArrayList<Variable> actual_parameters_two;
+non terminal ArrayList<Variable> actual_parameters_three;
+non terminal ArrayList<Variable> actual_parameters_four;
+non terminal Variable actual_parameters_key;
+non terminal assignment;
+non terminal Variable expression;
+non terminal Variable simple_expression;
+non terminal Variable expr;
+non terminal Variable term;
+non terminal Variable factor;
+non terminal Variable selector;
+non terminal array_selector;
+non terminal array_selector_one;
+non terminal array_selector_key;
+
+precedence right ASSIGN;
+precedence left OR;
+precedence left AND;
+precedence right NOT;
+precedence left EQUAL, NOTEQ, LESS, LESSEQ, BIG, BIGEQ;
+precedence left ADD, MINUS;
+precedence left MUL, DIV, MOD;
+precedence left LPARENTHESE;
+
+/* The grammar */
+module                     ::= MODULE IDENTIFIER:id1 SEMI declarations:dec 
+{: 
+    System.out.println("Module Name is " + id1); 
+:}
+                               main END IDENTIFIER:id2 DOT
+{:
+    if(!id2.equals(id1)){
+        throw new MismatchedBlockIdException(((OberonScanner) parser.getScanner()).getLine(), ((OberonScanner) parser.getScanner()).getColumn());
+    }
+    parser.idStack.pop();
+    System.out.println("Parsering Succeed! Show Call Graph...");
+    // System.out.println(parser.edge);
+    parser.draw(); 
+:};
+
+main                       ::= 
+                               | BEGIN
+{:
+    parser.graph.addProcedure("main", "main");
+:}
+                               statement_sequence:state_seq
+{:
+    parser.addCallSite("main", state_seq);
+:};
+
+declarations               ::= 
+{:
+	HashMap<String, Variable> curMap = new HashMap<String, Variable>();
+	HashMap<String, Variable> topMap = new HashMap<String, Variable>();
+	if(!parser.idStack.empty()){
+		topMap = parser.idStack.peek();
+		Iterator<Entry<String, Variable>> iter = topMap.entrySet().iterator(); 
+    	while (iter.hasNext()) { 
+        	Entry<String, Variable> entry = iter.next();
+        	if(entry.getValue().getType() == IdType.PROCEDURE){
+				curMap.put(entry.getKey(), entry.getValue());
+     		}
+    	}
+	}
+    parser.idStack.push(curMap);
+:}
+                               declarations_const:de_const declarations_type:de_type
+                               declarations_var:de_var declarations_procedure:de_procedure
+{:
+    HashMap<String, Variable> curMap = parser.idStack.pop();
+    HashMap<String, Variable> topMap = new HashMap<String, Variable>();
+    if(!parser.idStack.empty()){
+    	topMap = parser.idStack.peek();
+    	Iterator<Entry<String, Variable>> iter = topMap.entrySet().iterator(); 
+    	while (iter.hasNext()) { 
+        	Entry<String, Variable> entry = iter.next();
+        	if(curMap.get(entry.getKey()) == null){
+				curMap.put(entry.getKey(), entry.getValue());
+     		}
+    	}
+    }
+    parser.idStack.push(curMap);
+    System.out.println(curMap.toString());
+:};
+declarations_const         ::= 
+{:
+    HashMap<String, Variable> curMap = new HashMap<String, Variable>();
+    RESULT = curMap;
+:}
+                               | CONST declarations_const_one:const_one
+{:
+    HashMap<String, Variable> curMap = new HashMap<String, Variable>();
+       curMap.putAll(const_one);
+       RESULT = curMap;
+       // System.out.println("Const:"+curMap.toString());
+:};
+declarations_const_one     ::= 
+{:
+       HashMap<String, Variable> curMap = new HashMap<String, Variable>();
+    RESULT = curMap;
+:}
+                               | declarations_const_two:const_two
+{:
+    HashMap<String, Variable> curMap = new HashMap<String, Variable>();
+       curMap.putAll(const_two);
+       RESULT = curMap;
+:};
+declarations_const_two     ::= declarations_const_two:const_two declarations_const_key:const_key
+{:
+    const_two.putAll(const_key);
+    RESULT = const_two;
+:}                       
+                               | declarations_const_key:const_key_2
+{:
+    HashMap<String, Variable> curMap = new HashMap<String, Variable>();
+    curMap.putAll(const_key_2);
+    RESULT = curMap;
+:}; 
+declarations_const_key     ::= IDENTIFIER:id EQUAL expression:expr SEMI
+{: 
+    HashMap<String, Variable> curMap = parser.idStack.peek();
+    HashMap<String, Variable> item = new HashMap<>();
+    item.put(id, new Variable(IdType.INTEGER, expr));
+    if(curMap.get(id) != null){
+		throw new IdentifierConflictException(((OberonScanner) parser.getScanner()).getLine(), ((OberonScanner) parser.getScanner()).getColumn());
+	} else {
+		curMap.putAll(item);
+	}
+    RESULT = item;
+:};
+
+declarations_type          ::= 
+{:
+    HashMap<String, Variable> curMap = new HashMap<String, Variable>();
+    RESULT = curMap;
+:}
+                               | TYPE declarations_type_one:type_one
+{:
+    HashMap<String, Variable> curMap = new HashMap<String, Variable>();
+	curMap.putAll(type_one);
+	// System.out.println("Type:"+curMap.toString());
+	RESULT = curMap;
+:};
+declarations_type_one      ::= 
+{:
+	HashMap<String, Variable> curMap = new HashMap<String, Variable>();
+	RESULT = curMap;
+:}
+                               | declarations_type_two:type_two
+{:
+    HashMap<String, Variable> curMap = new HashMap<String, Variable>();
+	curMap.putAll(type_two);
+	RESULT = curMap;
+:};
+declarations_type_two      ::= declarations_type_two:type_two declarations_type_key:type_key
+{:
+    type_two.putAll(type_key);
+    RESULT = type_two;
+:}    
+                               | declarations_type_key:type_key_2
+{:
+    HashMap<String, Variable> curMap = new HashMap<String, Variable>();
+    curMap.putAll(type_key_2);
+    RESULT = curMap;
+:};
+declarations_type_key      ::= IDENTIFIER:id EQUAL type:tp SEMI
+{:
+	HashMap<String, Variable> curMap = parser.idStack.peek();
+    HashMap<String, Variable> item = new HashMap<>();
+    item.put(id, tp);
+    if(curMap.get(id) != null){
+		throw new IdentifierConflictException(((OberonScanner) parser.getScanner()).getLine(), ((OberonScanner) parser.getScanner()).getColumn());
+	} else {
+		curMap.putAll(item);
+	}
+    RESULT = item;
+:};
+
+declarations_var           ::= 
+{:
+    HashMap<String, Variable> curMap = new HashMap<String, Variable>();
+    RESULT = curMap;
+:}
+                               | VAR declarations_var_one:var_one 
+{:
+    HashMap<String, Variable> curMap = new HashMap<String, Variable>();
+	curMap.putAll(var_one);
+	// System.out.println("Var:"+curMap.toString());
+	RESULT = curMap;
+:};
+declarations_var_one       ::= 
+{:
+    HashMap<String, Variable> curMap = new HashMap<String, Variable>();
+    RESULT = curMap;
+:}
+                               | declarations_var_two:var_two 
+{:
+    HashMap<String, Variable> curMap = new HashMap<String, Variable>();
+	curMap.putAll(var_two);
+	RESULT = curMap;
+:};
+declarations_var_two       ::= declarations_var_two:var_two declarations_var_key:var_key
+{:
+    var_two.putAll(var_key);
+    RESULT = var_two;
+:}    
+                               | declarations_var_key:var_key_2
+{:
+    HashMap<String, Variable> curMap = new HashMap<String, Variable>();
+    curMap.putAll(var_key_2);
+    RESULT = curMap;
+:};               
+declarations_var_key       ::= identifier_list:id_list COLON type:tp SEMI
+{: 
+	HashMap<String, Variable> curMap = parser.idStack.peek();
+    HashMap<String, Variable> item = new HashMap<>();
+    for(int i = 0; i < id_list.size(); i++){
+    	if(curMap.get(id_list.get(i)) != null){
+			throw new IdentifierConflictException(((OberonScanner) parser.getScanner()).getLine(), ((OberonScanner) parser.getScanner()).getColumn());
+		}
+		curMap.put(id_list.get(i), tp);
+        item.put(id_list.get(i), tp);
+    }
+    RESULT = item;
+:};
+
+declarations_procedure     ::=
+{:
+    HashMap<String, Variable> curMap = new HashMap<String, Variable>();
+    RESULT = curMap;
+:} 
+                               | declarations_procedure_one:procedure_one
+{:
+    HashMap<String, Variable> curMap = new HashMap<String, Variable>();
+	curMap.putAll(procedure_one);
+	// System.out.println("Procedure:"+curMap.toString());
+	RESULT = curMap;
+:};
+declarations_procedure_one ::= declarations_procedure_one:procedure_one declarations_procedure_key:procedure_key
+{:
+    procedure_one.putAll(procedure_key);
+    RESULT = procedure_one;
+:}    
+                               | declarations_procedure_key:procedure_key_2
+{:
+    HashMap<String, Variable> curMap = new HashMap<String, Variable>();
+    curMap.putAll(procedure_key_2);
+    RESULT = curMap;
+:};
+declarations_procedure_key ::= procedure_declaration:pro_dec SEMI
+{: 
+    RESULT = pro_dec;
+:};
+
+procedure_declaration      ::= procedure_heading:head SEMI
+{:
+    HashMap<String, Variable> topMap = parser.idStack.peek();
+    HashMap<String, Variable> curMap = new HashMap<String, Variable>();
+    Iterator<Entry<String, Variable>> iter = head.entrySet().iterator(); 
+    String id = new String();
+    while (iter.hasNext()) { 
+        Entry<String, Variable> entry = iter.next();
+        if(entry.getValue().getType() == IdType.PROCEDURE){
+            id = entry.getKey();
+            curMap.put(entry.getKey(), entry.getValue());
+            parser.func_ali.put(entry.getKey(), ("func" + (++parser.fun_count)));
+            parser.graph.addProcedure(("func" + parser.fun_count), entry.getKey());
+            break;
+        }
+    } 
+    if(curMap.isEmpty()){
+        /*Throw exception*/
+    }
+    if(topMap.get(id) != null){
+	throw new IdentifierConflictException(((OberonScanner) parser.getScanner()).getLine(), ((OberonScanner) parser.getScanner()).getColumn());
+    } else {
+	topMap.putAll(curMap);
+    }
+    parser.temp_head = head;
+    parser.temp = id;
+    RESULT = curMap;
+:} 
+                               declarations 
+{:
+	HashMap<String, Variable> curMap = parser.idStack.peek();
+    HashMap<String, Variable> var = (HashMap<String, Variable>) parser.temp_head.get((parser.temp)).getValue();
+	Iterator<Entry<String, Variable>> iter = var.entrySet().iterator(); 
+    while (iter.hasNext()) { 
+  	 	Entry<String, Variable> entry = iter.next();
+  	 	String id = (entry.getKey().split("_"))[0];
+   		curMap.put(id, entry.getValue());
+  	}
+:}
+                               procedure_body:body 
+{:
+	if(!parser.temp.equals(body)){
+		throw new MismatchedBlockIdException(((OberonScanner) parser.getScanner()).getLine(), ((OberonScanner) parser.getScanner()).getColumn());
+	}
+:};
+
+procedure_body             ::= procedure_body_one:body_one 
+                               END IDENTIFIER:id
+{:
+    parser.addCallSite(id, body_one);
+    parser.idStack.pop();
+    RESULT = id;
+:};
+procedure_body_one         ::= 
+{:
+    HashMap<String, String> curMap = new HashMap<>();
+    RESULT = curMap;
+:}
+                               | procedure_body_key:body_key
+{:
+    RESULT = body_key;
+:};
+procedure_body_key         ::= BEGIN statement_sequence:state_seq
+{:
+    RESULT = state_seq;
+:};
+
+procedure_heading          ::= PROCEDURE IDENTIFIER:id procedure_heading_one:heading_one
+{:
+    HashMap<String, Variable> curMap = new HashMap<String, Variable>();
+    curMap.put(id, new Variable(IdType.PROCEDURE, heading_one));
+    RESULT = curMap;
+:};
+procedure_heading_one      ::= 
+{:
+    HashMap<String, Variable> curMap = new HashMap<String, Variable>();
+    RESULT = curMap;
+:}
+                               | procedure_heading_key:heading_key
+{:
+    RESULT = heading_key;
+:};
+procedure_heading_key      ::= formal_parameters:formal
+{:
+    RESULT = formal;
+:};
+
+formal_parameters          ::= LPARENTHESE
+{:
+	parser.index = 0;
+:} 
+                               formal_parameters_one:para_one 
+{:
+    RESULT = para_one;
+:}
+                               RPARENTHESE
+{:
+	parser.index = 0;
+:}
+                               | formal_parameters_one RPARENTHESE
+{:
+	if(true){
+		throw new MissingLeftParenthesisException(((OberonScanner) parser.getScanner()).getLine(), ((OberonScanner) parser.getScanner()).getColumn());
+	}
+:};
+formal_parameters_one      ::=
+{:
+    HashMap<String, Variable> curMap = new HashMap<String, Variable>();
+    RESULT = curMap;
+:}
+                               | formal_parameters_two:para_two
+{:
+    RESULT = para_two;
+:};
+formal_parameters_two      ::= fp_section:fp_sec formal_parameters_three:para_three
+{:
+    fp_sec.putAll(para_three);
+    RESULT = fp_sec;
+:};
+formal_parameters_three    ::= 
+{:
+    HashMap<String, Variable> curMap = new HashMap<String, Variable>();
+    RESULT = curMap;
+:}
+                               | formal_parameters_four:para_four
+{:
+    RESULT = para_four;
+:};
+formal_parameters_four     ::= formal_parameters_four:para_four formal_parameters_key:para_key
+{:
+    para_four.putAll(para_key);
+    RESULT = para_four;
+:}
+                               | formal_parameters_key:para_key
+{:
+    RESULT = para_key;
+:};
+formal_parameters_key      ::= SEMI fp_section:fp_sec
+{:
+    RESULT = fp_sec;
+:};
+
+fp_section                 ::= fp_section_one:fp_sec_one identifier_list:id_list COLON type:tp 
+{:
+    HashMap<String, Variable> curMap = new HashMap<String, Variable>();
+    for(int i = 0;i < id_list.size(); i++){
+        curMap.put(id_list.get(i)+"_"+(++parser.index), tp);
+    }
+    RESULT = curMap;
+:};
+fp_section_one             ::= | VAR ;
+
+
+type                       ::= BOOLEAN 
+{:
+    RESULT = new Variable(IdType.BOOLEAN);
+:}
+                               | INTEGER
+{:
+    RESULT = new Variable(IdType.INTEGER);
+:}
+                               | record_type:record_tp
+{:
+    RESULT = new Variable(IdType.RECORD, record_tp);
+:}
+                               | array_type:array_tp
+{:
+    RESULT = array_tp;
+:}
+                               | IDENTIFIER:id
+{:
+    HashMap<String, Variable> curMap = parser.idStack.peek();
+    Variable var = curMap.get(id);
+    if(var == null){
+        /*Throw exception*/
+    } else if(var.getType() == IdType.PROCEDURE){
+        /*Throw exception*/
+    } else {
+        RESULT = var;
+    }
+:};
+
+record_type                ::= RECORD field_list:fie_list record_type_one:rec_one END
+{:
+    fie_list.putAll(rec_one);
+    RESULT = fie_list;
+:};
+record_type_one            ::= 
+{:
+    HashMap<String, Variable> curMap = new HashMap<String, Variable>();
+    RESULT = curMap;
+:}
+                               | record_type_two:rec_two
+{:
+    RESULT = rec_two;
+:};
+record_type_two            ::= record_type_two:rec_two record_type_key:rec_key
+{:
+    rec_two.putAll(rec_key);
+    RESULT = rec_two;
+:} 
+                               | record_type_key:rec_key
+{:
+    RESULT = rec_key;
+:};
+record_type_key            ::= SEMI field_list:fie_list
+{:
+    RESULT = fie_list;
+:};
+
+field_list                 ::= 
+{:
+    HashMap<String, Variable> curMap = new HashMap<String, Variable>();
+    RESULT = curMap;
+:}
+                               | field_list_key:fie_key
+{:
+    RESULT = fie_key;
+:};
+field_list_key             ::= identifier_list:id_list COLON type:tp
+{:
+    HashMap<String, Variable> curMap = new HashMap<String, Variable>();
+    for(int i = 0;i < id_list.size(); i++){
+        curMap.put(id_list.get(i), tp);
+    }
+    RESULT = curMap;
+:};
+
+array_type                 ::= ARRAY expression:expr OF array_type:array_tp
+{:
+    if(expr.getType() != IdType.INTEGER){
+        throw new TypeMismatchedException(((OberonScanner) parser.getScanner()).getLine(), ((OberonScanner) parser.getScanner()).getColumn());
+    }
+    RESULT = array_tp;
+:}
+                               | ARRAY expression:expr OF INTEGER
+{:
+    if(expr.getType() != IdType.INTEGER){
+        throw new TypeMismatchedException(((OberonScanner) parser.getScanner()).getLine(), ((OberonScanner) parser.getScanner()).getColumn());
+    }
+    RESULT = new Variable(IdType.INTEGER);
+:}
+                               | ARRAY expression:expr OF BOOLEAN
+{:
+    if(expr.getType() != IdType.INTEGER){
+        throw new TypeMismatchedException(((OberonScanner) parser.getScanner()).getLine(), ((OberonScanner) parser.getScanner()).getColumn());
+    }
+    RESULT = new Variable(IdType.BOOLEAN);
+:}
+                               | ARRAY expression:expr OF record_type:record_tp
+{:
+    if(expr.getType() != IdType.INTEGER){
+        throw new TypeMismatchedException(((OberonScanner) parser.getScanner()).getLine(), ((OberonScanner) parser.getScanner()).getColumn());
+    }
+    RESULT = new Variable(IdType.RECORD, record_tp);
+:}
+                               | ARRAY expression:expr OF IDENTIFIER:id
+{:
+    HashMap<String, Variable> curMap = parser.idStack.peek();
+    Variable var = curMap.get(id);
+    if(var == null){
+        throw new IllegalTypeException(((OberonScanner) parser.getScanner()).getLine(), ((OberonScanner) parser.getScanner()).getColumn());
+    } else if(var.getType() == IdType.PROCEDURE){
+        throw new TypeMismatchedException(((OberonScanner) parser.getScanner()).getLine(), ((OberonScanner) parser.getScanner()).getColumn());
+    } else {
+        RESULT = var;
+    }
+:};
+
+identifier_list            ::= IDENTIFIER:id identifier_list_one:list_one
+{:
+    ArrayList<String> idList = new ArrayList<>();
+    idList.add(id);
+    idList.addAll(list_one);
+    // System.out.println(idList.toString());
+    RESULT = idList;
+:};
+identifier_list_one        ::= 
+{:
+    ArrayList<String> idList = new ArrayList<>();
+    RESULT = idList;
+:}
+                               | identifier_list_two:list_two
+{:
+    RESULT = list_two;
+:};
+identifier_list_two        ::= identifier_list_two:list_two identifier_list_key:list_key
+{:
+    list_two.add(list_key);
+    RESULT = list_two;
+:}
+                               | identifier_list_key:list_key_2
+{:
+    ArrayList<String> idList = new ArrayList<>();
+    idList.add(list_key_2);
+    RESULT = idList;
+:};
+identifier_list_key        ::= COMMA IDENTIFIER:id
+{:
+    RESULT = id;
+:};
+
+statement_sequence         ::= statement:state statement_sequence_one:seq_one
+{:
+    state.putAll(seq_one);
+    RESULT = state;
+    // System.out.println("Statement:" + state.toString());
+:};
+statement_sequence_one     ::= 
+{:
+    HashMap<String, String> curMap = new HashMap<>();
+    RESULT = curMap;
+:}
+                               | statement_sequence_two:seq_two
+{:
+    RESULT = seq_two;
+:};
+statement_sequence_two     ::= statement_sequence_two:seq_two statement_sequence_key:seq_key
+{:
+    seq_two.putAll(seq_key);
+    RESULT = seq_two;
+:}
+                               | statement_sequence_key:seq_key_2
+{:
+    RESULT = seq_key_2;
+:};
+statement_sequence_key     ::= SEMI statement:state
+{:
+    RESULT = state;
+:};
+
+statement                  ::= 
+{:
+    HashMap<String, String> curMap = new HashMap<>();
+    RESULT = curMap;
+:}
+                               | statement_one:state_one
+{:
+    RESULT = state_one;
+:};
+statement_one              ::= assignment 
+{:
+    HashMap<String, String> curMap = new HashMap<>();
+    RESULT = curMap;
+:} 
+                               | procedure_call:pro_call
+{:
+    HashMap<String, String> curMap = new HashMap<>();
+    curMap.putAll(pro_call);
+    RESULT = curMap;
+:} 
+                               | if_statement:if_state
+{:
+    HashMap<String, String> curMap = new HashMap<>();
+    curMap.putAll(if_state);
+    RESULT = curMap;
+:} 
+                               | while_statement:while_state
+{:
+    HashMap<String, String> curMap = new HashMap<>();
+    curMap.putAll(while_state);
+    RESULT = curMap;
+:} ;
+
+while_statement            ::= WHILE expression:expr DO
+{:
+    if(expr.getType() != IdType.BOOLEAN){
+        throw new TypeMismatchedException(((OberonScanner) parser.getScanner()).getLine(), ((OberonScanner) parser.getScanner()).getColumn());
+    }
+:} 
+                               statement_sequence:state_seq
+{:
+    RESULT = state_seq;
+:}
+                               END ;
+
+if_statement               ::= IF expression:expr THEN
+{:
+    if(expr.getType() != IdType.BOOLEAN){
+        throw new TypeMismatchedException(((OberonScanner) parser.getScanner()).getLine(), ((OberonScanner) parser.getScanner()).getColumn());
+    }
+:}
+                               statement_sequence:state_seq if_statement_elseif:state_elsif if_statement_else:state_else 
+{:
+    HashMap<String, String> curMap = new HashMap<String, String>();
+    curMap.putAll(state_seq);
+    curMap.putAll(state_elsif);
+    curMap.putAll(state_else);
+    RESULT = curMap;
+:}
+                               END;
+if_statement_elseif        ::= 
+{:
+    HashMap<String, String> curMap = new HashMap<String, String>();
+    RESULT = curMap;
+:}
+                               | if_statement_elseif_one:state_one
+{:
+    RESULT = state_one;
+:};
+if_statement_elseif_one    ::= if_statement_elseif_one:state_one if_statement_elseif_key:state_key
+{:
+    state_one.putAll(state_key);
+    RESULT = state_one;
+:}
+                               | if_statement_elseif_key:state_key_2
+{:
+    RESULT = state_key_2;
+:};
+if_statement_elseif_key    ::= ELSIF expression:expr THEN
+{:
+    if(expr.getType() != IdType.BOOLEAN){
+        throw new TypeMismatchedException(((OberonScanner) parser.getScanner()).getLine(), ((OberonScanner) parser.getScanner()).getColumn());
+    }
+:} 
+                               statement_sequence:state_seq
+{:
+    RESULT = state_seq;
+:};
+if_statement_else          ::= 
+{:
+    HashMap<String, String> curMap = new HashMap<String, String>();
+    RESULT = curMap;
+:}
+                               | if_statement_else_one:state_one
+{:
+    RESULT = state_one;
+:};
+if_statement_else_one      ::= ELSE statement_sequence:state_seq
+{:
+    RESULT = state_seq;
+:};
+
+procedure_call             ::= IDENTIFIER:id procedure_call_one:pro_one 
+{:
+    HashMap<String, String> curMap = new HashMap<>();
+    HashMap<String, Variable> topMap = parser.idStack.peek();
+    HashMap<String, Variable> parameter = new HashMap<>();
+    Variable procedure = topMap.get(id);
+    if(procedure == null){
+    	throw new IllegalIdentifierException(((OberonScanner) parser.getScanner()).getLine(), ((OberonScanner) parser.getScanner()).getColumn());
+    } else {
+    	parameter = (HashMap<String, Variable>) procedure.getValue();
+    	if(parameter.entrySet().size() != pro_one.size()){
+    		throw new ParameterMismatchedException(((OberonScanner) parser.getScanner()).getLine(), ((OberonScanner) parser.getScanner()).getColumn());
+    	}
+
+    	Iterator<Entry<String, Variable>> iter = parameter.entrySet().iterator(); 
+    	while (iter.hasNext()) { 
+        	Entry<String, Variable> entry = iter.next();
+        	Integer index = Integer.parseInt((entry.getKey().split("_"))[1]);
+        	if(pro_one.get(index-1).getType() != entry.getValue().getType()){
+				throw new TypeMismatchedException(((OberonScanner) parser.getScanner()).getLine(), ((OberonScanner) parser.getScanner()).getColumn());
+     		}
+    	}
+    }
+    String para = new String(id+"(");
+    if(pro_one.size() != 0){
+    	para += pro_one.get(0).getValue().toString();
+    	for(int i = 1 ; i < pro_one.size(); i++){
+        	para += ", " + pro_one.get(i).getValue().toString();
+    	}
+    }
+    para += ")";
+    int index = 0;
+    if(parser.call_count.get(id) != null){
+        index = parser.call_count.get(id);
+        parser.call_count.put(id, index+1);
+    } else {
+        parser.call_count.put(id, 1);
+    }
+    curMap.put(id+"_"+index, para);
+    // System.out.println("Para:"+curMap.toString());
+    RESULT = curMap;
+:};
+procedure_call_one         ::=
+{:
+    ArrayList<Variable> para = new ArrayList<>();
+    RESULT = para;
+:} 
+                               | actual_parameters:act_para
+{:
+    RESULT = act_para;
+:};
+
+actual_parameters          ::= LPARENTHESE actual_parameters_one:para_one RPARENTHESE
+{:
+    RESULT = para_one;
+:}
+                               | LPARENTHESE actual_parameters_one 
+{:
+	if(true){
+		throw new MissingRightParenthesisException(((OberonScanner) parser.getScanner()).getLine(), ((OberonScanner) parser.getScanner()).getColumn());
+	}
+:};
+actual_parameters_one      ::= 
+{:
+    ArrayList<Variable> para = new ArrayList<>();
+    RESULT = para;
+:} 
+                               | actual_parameters_two:para_two
+{:
+    RESULT = para_two;
+:};
+actual_parameters_two      ::= expression:expr actual_parameters_three:para_three
+{:
+    ArrayList<Variable> para = new ArrayList<>();
+    para.add(expr);
+    para.addAll(para_three);
+    RESULT = para;
+:};
+actual_parameters_three    ::= 
+{:
+    ArrayList<Variable> para = new ArrayList<>();
+    RESULT = para;
+:} 
+                               | actual_parameters_four:para_four
+{:
+    RESULT = para_four;
+:};
+actual_parameters_four     ::= actual_parameters_four:para_four actual_parameters_key:para_key
+{:
+    para_four.add(para_key);
+    RESULT = para_four;
+:}
+                               | actual_parameters_key:para_key_2
+{:
+    ArrayList<Variable> para = new ArrayList<>();
+    para.add(para_key_2);
+    RESULT = para;
+:};
+actual_parameters_key      ::= COMMA expression:expr
+{:
+    RESULT = expr;
+:};
+
+assignment                 ::= selector:sec ASSIGN expression:expr
+{:
+    if(sec.getType() != expr.getType()){
+        throw new TypeMismatchedException(((OberonScanner) parser.getScanner()).getLine(), ((OberonScanner) parser.getScanner()).getColumn());
+    }
+:};
+
+expression                 ::= simple_expression:simple_expr
+{:
+    RESULT = simple_expr;
+:}
+                               | simple_expression:sim_expr_1 EQUAL simple_expression:sim_expr_2
+{:
+    if(sim_expr_1.getType() != IdType.INTEGER || sim_expr_2.getType() != IdType.INTEGER){
+        throw new TypeMismatchedException(((OberonScanner) parser.getScanner()).getLine(), ((OberonScanner) parser.getScanner()).getColumn());
+    }
+    Boolean res = (Integer)sim_expr_1.getValue() == (Integer)sim_expr_2.getValue();
+    RESULT = new Variable(IdType.BOOLEAN, res);
+:}
+                               | simple_expression:sim_expr_1 NOTEQ simple_expression:sim_expr_2
+{:
+    if(sim_expr_1.getType() != IdType.INTEGER || sim_expr_2.getType() != IdType.INTEGER){
+        throw new TypeMismatchedException(((OberonScanner) parser.getScanner()).getLine(), ((OberonScanner) parser.getScanner()).getColumn());
+    }
+    Boolean res = (Integer)sim_expr_1.getValue() != (Integer)sim_expr_2.getValue();
+    RESULT = new Variable(IdType.BOOLEAN, res);
+:}
+                               | simple_expression:sim_expr_1 LESS simple_expression:sim_expr_2
+{:
+    if(sim_expr_1.getType() != IdType.INTEGER || sim_expr_2.getType() != IdType.INTEGER){
+        throw new TypeMismatchedException(((OberonScanner) parser.getScanner()).getLine(), ((OberonScanner) parser.getScanner()).getColumn());
+    }
+    Boolean res = (Integer)sim_expr_1.getValue() < (Integer)sim_expr_2.getValue();
+    RESULT = new Variable(IdType.BOOLEAN, res);
+:}
+                               | simple_expression:sim_expr_1 LESSEQ simple_expression:sim_expr_2
+{:
+    if(sim_expr_1.getType() != IdType.INTEGER || sim_expr_2.getType() != IdType.INTEGER){
+        throw new TypeMismatchedException(((OberonScanner) parser.getScanner()).getLine(), ((OberonScanner) parser.getScanner()).getColumn());
+    }
+    Boolean res = (Integer)sim_expr_1.getValue() <= (Integer)sim_expr_2.getValue();
+    RESULT = new Variable(IdType.BOOLEAN, res);
+:}
+                               | simple_expression:sim_expr_1 BIG simple_expression:sim_expr_2
+{:
+    if(sim_expr_1.getType() != IdType.INTEGER || sim_expr_2.getType() != IdType.INTEGER){
+        throw new TypeMismatchedException(((OberonScanner) parser.getScanner()).getLine(), ((OberonScanner) parser.getScanner()).getColumn());
+    }
+    Boolean res = (Integer)sim_expr_1.getValue() > (Integer)sim_expr_2.getValue();
+    RESULT = new Variable(IdType.BOOLEAN, res);
+:}
+                               | simple_expression:sim_expr_1 BIGEQ simple_expression:sim_expr_2
+{:
+    if(sim_expr_1.getType() != IdType.INTEGER || sim_expr_2.getType() != IdType.INTEGER){
+        throw new TypeMismatchedException(((OberonScanner) parser.getScanner()).getLine(), ((OberonScanner) parser.getScanner()).getColumn());
+    }
+    Boolean res = (Integer)sim_expr_1.getValue() >= (Integer)sim_expr_2.getValue();
+    RESULT = new Variable(IdType.BOOLEAN, res);
+:};
+
+simple_expression          ::= expr:ex
+{:
+    RESULT = ex;
+:};
+expr                       ::= expr:ex ADD term:te
+{:
+    if(ex.getType() != IdType.INTEGER || te.getType() != IdType.INTEGER){
+        throw new TypeMismatchedException(((OberonScanner) parser.getScanner()).getLine(), ((OberonScanner) parser.getScanner()).getColumn());
+    }
+    Integer res = (Integer)ex.getValue() + (Integer)te.getValue();
+    RESULT = new Variable(IdType.INTEGER, res);
+:}
+                               | expr:ex MINUS term:te
+{:
+    if(ex.getType() != IdType.INTEGER || te.getType() != IdType.INTEGER){
+        throw new TypeMismatchedException(((OberonScanner) parser.getScanner()).getLine(), ((OberonScanner) parser.getScanner()).getColumn());
+    }
+    Integer res = (Integer)ex.getValue() - (Integer)te.getValue();
+    RESULT = new Variable(IdType.INTEGER, res);
+:}
+                               | expr:ex OR term:te
+{:
+    if(ex.getType() != IdType.BOOLEAN || te.getType() != IdType.BOOLEAN){
+        throw new TypeMismatchedException(((OberonScanner) parser.getScanner()).getLine(), ((OberonScanner) parser.getScanner()).getColumn());
+    }
+    Boolean res = (Boolean)ex.getValue() || (Boolean)te.getValue();
+    RESULT = new Variable(IdType.BOOLEAN, res);
+:}
+                               | term:te
+{:
+    RESULT = te;
+:};
+term                       ::= term:te MUL factor:fac
+{:
+    if(te.getType() != IdType.INTEGER || fac.getType() != IdType.INTEGER){
+        throw new TypeMismatchedException(((OberonScanner) parser.getScanner()).getLine(), ((OberonScanner) parser.getScanner()).getColumn());
+    }
+    Integer res = (Integer)te.getValue() * (Integer)fac.getValue();
+    RESULT = new Variable(IdType.INTEGER, res);
+:}
+                               | term:te DIV factor:fac
+{:
+    if(te.getType() != IdType.INTEGER || fac.getType() != IdType.INTEGER){
+        throw new TypeMismatchedException(((OberonScanner) parser.getScanner()).getLine(), ((OberonScanner) parser.getScanner()).getColumn());
+    } else if((Integer)fac.getValue() == 0){
+        throw new DivideByZeroException(((OberonScanner) parser.getScanner()).getLine(), ((OberonScanner) parser.getScanner()).getColumn());
+    }
+    Integer res = (Integer)te.getValue() / (Integer)fac.getValue();
+    RESULT = new Variable(IdType.INTEGER, res);
+:}
+                               | term:te MOD factor:fac
+{:
+    if(te.getType() != IdType.INTEGER || fac.getType() != IdType.INTEGER){
+        throw new TypeMismatchedException(((OberonScanner) parser.getScanner()).getLine(), ((OberonScanner) parser.getScanner()).getColumn());
+    }
+    Integer res = (Integer)te.getValue() % (Integer)fac.getValue();
+    RESULT = new Variable(IdType.INTEGER, res);
+:}
+                               | term:te AND factor:fac
+{:
+    if(te.getType() != IdType.BOOLEAN || fac.getType() != IdType.BOOLEAN){
+        throw new TypeMismatchedException(((OberonScanner) parser.getScanner()).getLine(), ((OberonScanner) parser.getScanner()).getColumn());
+    }
+    Boolean res = (Boolean)te.getValue() && (Boolean)fac.getValue();
+    RESULT = new Variable(IdType.BOOLEAN, res);
+:}
+                               | factor:fac
+{:
+    RESULT = fac;
+:};
+factor                     ::= NUMBER:num
+{:
+    RESULT = new Variable(IdType.INTEGER, num);
+:}
+                               | ADD factor:fac
+{:
+    if(fac.getType() != IdType.INTEGER){
+        throw new TypeMismatchedException(((OberonScanner) parser.getScanner()).getLine(), ((OberonScanner) parser.getScanner()).getColumn());
+    }
+    RESULT = fac;
+:}
+                               | MINUS factor:fac
+{:
+    if(fac.getType() != IdType.INTEGER){
+        throw new TypeMismatchedException(((OberonScanner) parser.getScanner()).getLine(), ((OberonScanner) parser.getScanner()).getColumn());
+    }
+    Integer res = (Integer)fac.getValue();
+    RESULT = new Variable(IdType.INTEGER, -res);
+:}
+                               | NOT factor:fac
+{:
+    if(fac.getType() != IdType.BOOLEAN){
+        throw new TypeMismatchedException(((OberonScanner) parser.getScanner()).getLine(), ((OberonScanner) parser.getScanner()).getColumn());
+    }
+    Boolean res = (Boolean)fac.getValue();
+    RESULT = new Variable(IdType.BOOLEAN, !res);
+:}
+                               | selector:sec
+{:
+    RESULT = sec;
+:}                               
+                               | LPARENTHESE expression:ex RPARENTHESE
+{:
+    RESULT = ex;
+:}
+                               | LPARENTHESE RPARENTHESE
+{:
+   if(true){
+		throw new MissingOperandException(((OberonScanner) parser.getScanner()).getLine(), ((OberonScanner) parser.getScanner()).getColumn());
+	}
+:};
+
+selector                   ::= IDENTIFIER:id DOT IDENTIFIER:sub_id
+{:
+    HashMap<String, Variable> curMap = parser.idStack.peek();
+    Variable var = curMap.get(id);
+    if(var == null){
+        throw new IllegalIdentifierException(((OberonScanner) parser.getScanner()).getLine(), ((OberonScanner) parser.getScanner()).getColumn());
+    }
+    HashMap<String, Variable> record = (HashMap<String, Variable>)var.getValue();
+    Variable type = record.get(sub_id);
+    if(type == null){
+        throw new IllegalIdentifierException(((OberonScanner) parser.getScanner()).getLine(), ((OberonScanner) parser.getScanner()).getColumn());
+    }
+    RESULT = type;
+:}
+                               | IDENTIFIER:id array_selector:array_select
+{:
+    HashMap<String, Variable> curMap = parser.idStack.peek();
+    Variable var = curMap.get(id);
+    if(var == null){
+        throw new IllegalIdentifierException(((OberonScanner) parser.getScanner()).getLine(), ((OberonScanner) parser.getScanner()).getColumn());
+    }
+    RESULT = var;
+:};
+
+array_selector            ::= | array_selector_one;
+array_selector_one        ::= array_selector_one array_selector_key 
+                              | array_selector_key;
+array_selector_key        ::= LSQBRACKET expression RSQBRACKET ;

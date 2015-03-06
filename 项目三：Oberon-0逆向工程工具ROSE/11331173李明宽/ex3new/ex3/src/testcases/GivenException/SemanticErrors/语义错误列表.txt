@@ -1,0 +1,10 @@
+语义错误的测试样例：
+Factorial.obr   正确样例
+Factorial.001   常量已定义
+Factorial.002   函数调用的参数个数不一致
+Factorial.003   函数已定义
+Factorial.004   类型已定义
+Factorial.005   类型不匹配
+Factorial.006   类型未定义
+Factorial.007   变量已定义
+Factorial.008   变量未定义

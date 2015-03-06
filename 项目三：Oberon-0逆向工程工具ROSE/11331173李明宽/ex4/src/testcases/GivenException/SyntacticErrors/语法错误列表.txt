@@ -1,0 +1,11 @@
+语法错误的测试样例：
+Factorial.obr   正确样例
+Factorial.001   数组长度不合法（为boolean类型或其他类型）
+Factorial.002   常量定义不合法（为boolean类型或其他类型）
+Factorial.003   缺少左括号
+Factorial.004   缺少右括号
+Factorial.005   缺少操作数
+Factorial.006   缺少操作符
+Factorial.007   缺少;符号
+Factorial.008   module的名字不匹配（一开始的声明和结束时的声明不一致）
+Factorial.009   procedure的名字不匹配（一开始的声明和结束时的声明不一致）

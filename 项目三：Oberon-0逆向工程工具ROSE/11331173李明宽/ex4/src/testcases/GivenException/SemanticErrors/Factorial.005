@@ -1,0 +1,29 @@
+(* A correct Oberon-0 program. *)
+module Factorial;
+    var b : boolean;
+    
+    (* A function to calculate the factorial of n. *)
+    procedure calculate(n : integer);
+        var i, j : integer;
+    begin
+        i := 1;
+        j := 1;
+        while i <= n do
+            j := j * i;
+            i := i + 1;
+        end;
+        i := j;
+    end calculate;
+    
+    
+begin
+    calculate(b);
+    
+    calculate(2);
+    
+    calculate(3);
+    
+    calculate(4);
+    
+    calculate(5);
+end Factorial.

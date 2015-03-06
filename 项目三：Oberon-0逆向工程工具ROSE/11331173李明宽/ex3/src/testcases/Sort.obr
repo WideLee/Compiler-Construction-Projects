@@ -1,0 +1,46 @@
+(* A correct Oberon-0 program. *)
+module Sort;
+    const 
+        maxn = 100;
+        
+    var
+        a : array maxn of integer;
+        i, n : integer;
+    
+    procedure bubbleSort(var a: array maxn of integer; n: integer);
+        var 
+            i, j, t: integer;
+        begin
+            i := 0;
+            while i < n do
+                j := i+1;
+                while j < n do
+                    if a[i] > a[j] then
+                        t := a[i];
+                        a[i] := a[j];
+                        a[j] := t;
+                    end;
+                    j := j + 1;
+                end;
+                i := i + 1;
+            end;
+    end bubbleSort;
+    
+    begin
+        read(n);
+        
+        i := 0;
+        while i < n do
+            read(a[i]);
+            i := i + 1;
+        end;
+        
+        bubbleSort(a, n);
+        
+        i := 0;
+        while i < n do
+            write(a[i]);
+            writeln();
+            i := i + 1;
+        end;
+end Sort.

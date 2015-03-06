@@ -1,0 +1,32 @@
+(* An Oberon-0 demonstrating the usage of a call graph. *)
+module callgraph;
+    var x, y: integer;
+
+    procedure b(i: integer; j: integer);
+    begin
+        x := i + j;
+    end b;
+    
+    procedure d(i: integer; j: integer);
+    begin
+        y := i * j;
+    end d;
+    
+    procedure c(i: integer; j: integer);
+    begin
+        b(x + i, 2 * j);
+        d(2 * i, y + j);
+    end c;
+    
+    procedure a;
+    begin
+        b(x, 1);
+        c(y, 2);
+    end a;
+    
+    begin
+        a();
+        b(x, y);
+        c(x, y);
+        d(x, y);
+end callgraph.

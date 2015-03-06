@@ -1,0 +1,227 @@
+Now, testing the Lexcial errors.
+Test-001
+Illegal Symbols have been found.
+The error position is Line 3 Column 0
+Test-002
+The integer is illegal.
+The error position is Line 3 Column 17
+Test-003
+The integer's length is too long.
+The error position is Line 3 Column 17
+Test-004
+The integer's length is too long.
+The error position is Line 3 Column 17
+Test-005
+The octal integer  is illegal.
+The error position is Line 3 Column 17
+Test-006
+Identifier's length is too long.
+The error position is Line 4 Column 37
+Test-007
+Comment is Mismatched.
+The error position is Line 2 Column 0
+Test-008
+Comment is Mismatched.
+The error position is Line 2 Column 0
+Test-009
+Illegal Symbols have been found.
+The error position is Line 3 Column 18
+Test-010
+Illegal Symbols have been found.
+The error position is Line 11 Column 0
+Test-011
+The integer is illegal.
+The error position is Line 28 Column 6
+Test-012
+The integer's length is too long.
+The error position is Line 12 Column 13
+Test-013
+Module Name is sample
+The octal integer  is illegal.
+The error position is Line 93 Column 7
+Test-014
+Identifier's length is too long.
+The error position is Line 12 Column 6
+Test-015
+Comment is Mismatched.
+The error position is Line 9 Column 0
+Test-016
+The integer is illegal.
+The error position is Line 12 Column 13
+Test-017
+Comment is Mismatched.
+The error position is Line 39 Column 0
+Test-018
+Comment is Mismatched.
+The error position is Line 9 Column 70
+Test-019
+The octal integer  is illegal.
+The error position is Line 12 Column 13
+请按任意键继续. . .
+Now, testing the Syntactic errors.
+Test-001
+Type has been mismatched.
+The error position is Line 8 Column 22
+Module Name is factorial
+Test-002
+Type has been mismatched.
+The error position is Line 3 Column 22
+Module Name is factorial
+Test-003
+Module Name is factorial
+Syntax error at line 29 column 12, near ")"
+Miss right parenthesis.
+
+Test-004
+Module Name is factorial
+Miss right parenthesis.
+The error position is Line 29 Column 12
+Test-005
+Syntax error at line 11 column 22, near ";"
+Miss operand.
+
+Module Name is factorial
+Test-006
+Syntax error at line 11 column 21, near "i"
+Someting error in statement
+Module Name is factorial
+Test-007
+Syntax error at line 6 column 9, near "VAR"
+Couldn't repair and continue parse
+Can't recover from previous error(s)
+Test-008
+Module Name is factorial
+Block identifier is Mismatched.
+
+Test-009
+Block identifier is Mismatched.
+The error position is Line 7 Column 9
+Module Name is factorial
+Test-010
+Missing left parenthesis.
+The error position is Line 24 Column 77
+null
+Test-011
+Syntax error at line 87 column 8, near "i"
+Miss right parenthesis.
+
+Module Name is sample
+Test-012
+Module Name is sample
+Syntax error at line 126 column 12, near "*"
+Miss right parenthesis.
+
+Test-013
+Syntax error at line 27 column 1, near "BEGIN"
+Maybe Missing semicolon.
+Couldn't repair and continue parse
+Can't recover from previous error(s)
+Test-014
+Miss right parenthesis.
+The error position is Line 87 Column 8
+Module Name is sample
+Test-015
+Module Name is sample
+Miss right parenthesis.
+The error position is Line 127 Column 14
+Test-016
+Module Name is sample
+Syntax error at line 116 column 3, near "write"
+Syntax error at line 116 column 29, near ";"
+Miss right parenthesis.
+
+Test-017
+Module Name is sample
+Syntax error at line 127 column 14, near "2"
+Miss right parenthesis.
+
+Test-018
+Syntax error at line 13 column 14, near ";"
+Missing semicolon.
+Undefine identifier.
+The error position is Line 21 Column 22
+Undefine identifier.
+The error position is Line 24 Column 42
+Module Name is sample
+Test-019
+Module Name is sample
+Syntax error at line 118 column 2, near "ELSIF"
+Someting error in statement
+Syntax error at line 132 column 5, near "sample"
+Couldn't repair and continue parse
+Can't recover from previous error(s)
+请按任意键继续. . .
+Now, testing the Semantic errors.
+Test-001
+Identifier is Conflict.You have define the id before.
+The error position is Line 4 Column 11
+Module Name is factorial
+Test-002
+Module Name is factorial
+The number of parameters is incorrect.
+The error position is Line 19 Column 18
+Test-003
+Identifier is Conflict.You have define the id before.
+The error position is Line 17 Column 37
+Module Name is factorial
+Test-004
+Identifier is Conflict.You have define the id before.
+The error position is Line 4 Column 10
+Module Name is factorial
+Test-005
+Module Name is factorial
+Type has been mismatched.
+The error position is Line 20 Column 16
+Test-006
+Undefine identifier.
+The error position is Line 7 Column 17
+Module Name is factorial
+Test-007
+Identifier is Conflict.You have define the id before.
+The error position is Line 6 Column 19
+Module Name is factorial
+Test-008
+Undefine identifier.
+The error position is Line 10 Column 9
+Module Name is factorial
+Test-009
+Type has been mismatched.
+The error position is Line 28 Column 18
+Module Name is sample
+Test-010
+Module Name is sample
+Type has been mismatched.
+The error position is Line 101 Column 5
+Test-011
+Module Name is sample
+Type has been mismatched.
+The error position is Line 113 Column 32
+Test-012
+Module Name is sample
+The number of parameters is incorrect.
+The error position is Line 113 Column 24
+Type has been mismatched.
+The error position is Line 113 Column 24
+Type has been mismatched.
+The error position is Line 113 Column 24
+Index: 2, Size: 2
+Test-013
+The number of parameters is incorrect.
+The error position is Line 74 Column 12
+Module Name is sample
+Test-014
+Module Name is sample
+The number of parameters is incorrect.
+The error position is Line 123 Column 21
+Test-015
+Module Name is sample
+The number of parameters is incorrect.
+The error position is Line 127 Column 8
+Index: 0, Size: 0
+Test-016
+Module Name is sample
+Type has been mismatched.
+The error position is Line 113 Column 22
+请按任意键继续. . .
+
+

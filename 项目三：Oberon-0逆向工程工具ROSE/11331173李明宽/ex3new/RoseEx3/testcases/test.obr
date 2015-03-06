@@ -1,0 +1,32 @@
+(*This is a test program.*)
+(********************************************************************)
+(* Sample.obr  Version 1.00  <Fri Dec 20 20:08:53 2013>             *)
+(*                                                                  *)
+(* Copyright(C) 2011-2012 LiMingkuan(11331173)  All rights reserved.*)
+(* LiMingkuan is a student majoring in Software Engineering,        *)
+(* from the School of Software,                                     *) 
+(* SUN YAT-SEN UNIVERSITY, GZ 510006, P. R. China                   *)
+(********************************************************************)
+
+MODULE Sample;
+
+CONST size = 100;
+TYPE UserRecord = RECORD
+		userid : INTEGER;
+		score : INTEGER
+	END;
+VAR num, max, result, i : INTEGER;
+    userList : ARRAY size OF UserRecord;
+
+
+BEGIN
+
+num := 012345;
+num := 1 + 2 
+Write (userList[max].userid) ;
+WriteLn();
+Write(userList[max].score);
+WriteLn();
+
+
+END Sample.

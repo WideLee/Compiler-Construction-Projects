@@ -1,0 +1,1030 @@
+Testing Procedure
+========================================================
+OpStack: $ 
+ValStack: 
+Action: 1
+OpStack: $ 9 
+ValStack: 
+Action: 9
+OpStack: $ 
+ValStack: 9 
+Action: 1
+OpStack: $ - 
+ValStack: 9 
+Action: 1
+OpStack: $ - 3 
+ValStack: 9 
+Action: 9
+OpStack: $ - 
+ValStack: 9 3 
+Action: 1
+OpStack: $ - * 
+ValStack: 9 3 
+Action: 1
+OpStack: $ - * 2 
+ValStack: 9 3 
+Action: 9
+OpStack: $ - * 
+ValStack: 9 3 2 
+Action: 2
+OpStack: $ - 6.0 
+ValStack: 9 
+Action: 9
+OpStack: $ - 
+ValStack: 9 6.0 
+Action: 2
+OpStack: $ 3.0 
+ValStack: 
+Action: 9
+OpStack: $ 
+ValStack: 3.0 
+Action: 0
+
+C001 A simple expression.
+Input: 9 - 3 * 2
+Expected output: 3
+Passed !
+OpStack: $ 
+ValStack: 
+Action: 1
+OpStack: $ 2.25e+2 
+ValStack: 
+Action: 9
+OpStack: $ 
+ValStack: 2.25e+2 
+Action: 1
+OpStack: $ - 
+ValStack: 2.25e+2 
+Action: 1
+OpStack: $ - ( 
+ValStack: 2.25e+2 
+Action: 1
+OpStack: $ - ( 55.5 
+ValStack: 2.25e+2 
+Action: 9
+OpStack: $ - ( 
+ValStack: 2.25e+2 55.5 
+Action: 1
+OpStack: $ - ( + 
+ValStack: 2.25e+2 55.5 
+Action: 1
+OpStack: $ - ( + 4 
+ValStack: 2.25e+2 55.5 
+Action: 9
+OpStack: $ - ( + 
+ValStack: 2.25e+2 55.5 4 
+Action: 1
+OpStack: $ - ( + * 
+ValStack: 2.25e+2 55.5 4 
+Action: 1
+OpStack: $ - ( + * ( 
+ValStack: 2.25e+2 55.5 4 
+Action: 1
+OpStack: $ - ( + * ( 10 
+ValStack: 2.25e+2 55.5 4 
+Action: 9
+OpStack: $ - ( + * ( 
+ValStack: 2.25e+2 55.5 4 10 
+Action: 1
+OpStack: $ - ( + * ( / 
+ValStack: 2.25e+2 55.5 4 10 
+Action: 1
+OpStack: $ - ( + * ( / 2 
+ValStack: 2.25e+2 55.5 4 10 
+Action: 9
+OpStack: $ - ( + * ( / 
+ValStack: 2.25e+2 55.5 4 10 2 
+Action: 2
+OpStack: $ - ( + * ( 5.0 
+ValStack: 2.25e+2 55.5 4 
+Action: 9
+OpStack: $ - ( + * ( 
+ValStack: 2.25e+2 55.5 4 5.0 
+Action: 1
+OpStack: $ - ( + * ( ) 
+ValStack: 2.25e+2 55.5 4 5.0 
+Action: 4
+OpStack: $ - ( + * 
+ValStack: 2.25e+2 55.5 4 5.0 
+Action: 1
+OpStack: $ - ( + * ^ 
+ValStack: 2.25e+2 55.5 4 5.0 
+Action: 1
+OpStack: $ - ( + * ^ 2 
+ValStack: 2.25e+2 55.5 4 5.0 
+Action: 9
+OpStack: $ - ( + * ^ 
+ValStack: 2.25e+2 55.5 4 5.0 2 
+Action: 2
+OpStack: $ - ( + * 25.0 
+ValStack: 2.25e+2 55.5 4 
+Action: 9
+OpStack: $ - ( + * 
+ValStack: 2.25e+2 55.5 4 25.0 
+Action: 2
+OpStack: $ - ( + 100.0 
+ValStack: 2.25e+2 55.5 
+Action: 9
+OpStack: $ - ( + 
+ValStack: 2.25e+2 55.5 100.0 
+Action: 2
+OpStack: $ - ( 155.5 
+ValStack: 2.25e+2 
+Action: 9
+OpStack: $ - ( 
+ValStack: 2.25e+2 155.5 
+Action: 1
+OpStack: $ - ( ) 
+ValStack: 2.25e+2 155.5 
+Action: 4
+OpStack: $ - 
+ValStack: 2.25e+2 155.5 
+Action: 2
+OpStack: $ 69.5 
+ValStack: 
+Action: 9
+OpStack: $ 
+ValStack: 69.5 
+Action: 0
+
+C002 Expression with arithmetic operations.
+Input: 2.25E+2 - (55.5 + 4 * (10 / 2) ^ 2)
+Expected output: 69.5
+Passed !
+OpStack: $ 
+ValStack: 
+Action: 1
+OpStack: $ 65 
+ValStack: 
+Action: 9
+OpStack: $ 
+ValStack: 65 
+Action: 1
+OpStack: $ / 
+ValStack: 65 
+Action: 1
+OpStack: $ / 5 
+ValStack: 65 
+Action: 9
+OpStack: $ / 
+ValStack: 65 5 
+Action: 2
+OpStack: $ 13.0 
+ValStack: 
+Action: 9
+OpStack: $ 
+ValStack: 13.0 
+Action: 1
+OpStack: $ - 
+ValStack: 13.0 
+Action: 1
+OpStack: $ - 130e-1 
+ValStack: 13.0 
+Action: 9
+OpStack: $ - 
+ValStack: 13.0 130e-1 
+Action: 2
+OpStack: $ 0.0 
+ValStack: 
+Action: 9
+OpStack: $ 
+ValStack: 0.0 
+Action: 0
+
+C003 Expression with arithmetic operations.
+Input: 65 / 5 - 130e-1
+Expected output: 0.0
+Passed !
+OpStack: $ 
+ValStack: 
+Action: 1
+OpStack: $ ( 
+ValStack: 
+Action: 1
+OpStack: $ ( 5 
+ValStack: 
+Action: 9
+OpStack: $ ( 
+ValStack: 5 
+Action: 1
+OpStack: $ ( > 
+ValStack: 5 
+Action: 1
+OpStack: $ ( > 3 
+ValStack: 5 
+Action: 9
+OpStack: $ ( > 
+ValStack: 5 3 
+Action: 8
+OpStack: $ ( true 
+ValStack: 
+Action: 9
+OpStack: $ ( 
+ValStack: true 
+Action: 1
+OpStack: $ ( ) 
+ValStack: true 
+Action: 4
+OpStack: $ 
+ValStack: true 
+Action: 1
+OpStack: $ & 
+ValStack: true 
+Action: 1
+OpStack: $ & ( 
+ValStack: true 
+Action: 1
+OpStack: $ & ( 4 
+ValStack: true 
+Action: 9
+OpStack: $ & ( 
+ValStack: true 4 
+Action: 1
+OpStack: $ & ( < 
+ValStack: true 4 
+Action: 1
+OpStack: $ & ( < 8 
+ValStack: true 4 
+Action: 9
+OpStack: $ & ( < 
+ValStack: true 4 8 
+Action: 8
+OpStack: $ & ( true 
+ValStack: true 
+Action: 9
+OpStack: $ & ( 
+ValStack: true true 
+Action: 1
+OpStack: $ & ( ) 
+ValStack: true true 
+Action: 4
+OpStack: $ & 
+ValStack: true true 
+Action: 6
+OpStack: $ true 
+ValStack: 
+Action: 9
+OpStack: $ 
+ValStack: true 
+Action: 1
+OpStack: $ ? 
+ValStack: true 
+Action: 1
+OpStack: $ ? 15 
+ValStack: true 
+Action: 9
+OpStack: $ ? 
+ValStack: true 15 
+Action: 1
+OpStack: $ ? : 
+ValStack: true 15 
+Action: 1
+OpStack: $ ? : 16 
+ValStack: true 15 
+Action: 9
+OpStack: $ ? : 
+ValStack: true 15 16 
+Action: 5
+OpStack: $ 15.0 
+ValStack: 
+Action: 9
+OpStack: $ 
+ValStack: 15.0 
+Action: 0
+
+C004 Expression with relational and logical operations.
+Input: (5 > 3) & (4 < 8) ? 15 : 16
+Expected output: 15
+Passed !
+OpStack: $ 
+ValStack: 
+Action: 1
+OpStack: $ max 
+ValStack: 
+Action: 1
+OpStack: $ max ( 
+ValStack: 
+Action: 1
+OpStack: $ max ( sin 
+ValStack: 
+Action: 1
+OpStack: $ max ( sin ( 
+ValStack: 
+Action: 1
+OpStack: $ max ( sin ( 0.15 
+ValStack: 
+Action: 9
+OpStack: $ max ( sin ( 
+ValStack: 0.15 
+Action: 1
+OpStack: $ max ( sin ( ) 
+ValStack: 0.15 
+Action: 4
+OpStack: $ max ( 0.14943813247359922 
+ValStack: 
+Action: 9
+OpStack: $ max ( 
+ValStack: 0.14943813247359922 
+Action: 1
+OpStack: $ max ( , 
+ValStack: 0.14943813247359922 
+Action: 1
+OpStack: $ max ( , cos 
+ValStack: 0.14943813247359922 
+Action: 1
+OpStack: $ max ( , cos ( 
+ValStack: 0.14943813247359922 
+Action: 1
+OpStack: $ max ( , cos ( 0.15 
+ValStack: 0.14943813247359922 
+Action: 9
+OpStack: $ max ( , cos ( 
+ValStack: 0.14943813247359922 0.15 
+Action: 1
+OpStack: $ max ( , cos ( ) 
+ValStack: 0.14943813247359922 0.15 
+Action: 4
+OpStack: $ max ( , 0.9887710779360422 
+ValStack: 0.14943813247359922 
+Action: 9
+OpStack: $ max ( , 
+ValStack: 0.14943813247359922 0.9887710779360422 
+Action: 1
+OpStack: $ max ( , , 
+ValStack: 0.14943813247359922 0.9887710779360422 
+Action: 1
+OpStack: $ max ( , , sin 
+ValStack: 0.14943813247359922 0.9887710779360422 
+Action: 1
+OpStack: $ max ( , , sin ( 
+ValStack: 0.14943813247359922 0.9887710779360422 
+Action: 1
+OpStack: $ max ( , , sin ( cos 
+ValStack: 0.14943813247359922 0.9887710779360422 
+Action: 1
+OpStack: $ max ( , , sin ( cos ( 
+ValStack: 0.14943813247359922 0.9887710779360422 
+Action: 1
+OpStack: $ max ( , , sin ( cos ( 0.15 
+ValStack: 0.14943813247359922 0.9887710779360422 
+Action: 9
+OpStack: $ max ( , , sin ( cos ( 
+ValStack: 0.14943813247359922 0.9887710779360422 0.15 
+Action: 1
+OpStack: $ max ( , , sin ( cos ( ) 
+ValStack: 0.14943813247359922 0.9887710779360422 0.15 
+Action: 4
+OpStack: $ max ( , , sin ( 0.9887710779360422 
+ValStack: 0.14943813247359922 0.9887710779360422 
+Action: 9
+OpStack: $ max ( , , sin ( 
+ValStack: 0.14943813247359922 0.9887710779360422 0.9887710779360422 
+Action: 1
+OpStack: $ max ( , , sin ( ) 
+ValStack: 0.14943813247359922 0.9887710779360422 0.9887710779360422 
+Action: 4
+OpStack: $ max ( , , 0.8353510503905047 
+ValStack: 0.14943813247359922 0.9887710779360422 
+Action: 9
+OpStack: $ max ( , , 
+ValStack: 0.14943813247359922 0.9887710779360422 0.8353510503905047 
+Action: 1
+OpStack: $ max ( , , ) 
+ValStack: 0.14943813247359922 0.9887710779360422 0.8353510503905047 
+Action: 4
+OpStack: $ 0.9887710779360422 
+ValStack: 
+Action: 9
+OpStack: $ 
+ValStack: 0.9887710779360422 
+Action: 0
+
+C005 Predefined functions.
+Input: max(sin(0.15), cos(0.15), sin(cos(0.15)))
+Expected output: 0.98877
+Passed !
+OpStack: $ 
+ValStack: 
+Action: 1
+OpStack: $ sin 
+ValStack: 
+Action: 1
+OpStack: $ sin ( 
+ValStack: 
+Action: 1
+OpStack: $ sin ( min 
+ValStack: 
+Action: 1
+OpStack: $ sin ( min ( 
+ValStack: 
+Action: 1
+OpStack: $ sin ( min ( 12 
+ValStack: 
+Action: 9
+OpStack: $ sin ( min ( 
+ValStack: 12 
+Action: 1
+OpStack: $ sin ( min ( , 
+ValStack: 12 
+Action: 1
+OpStack: $ sin ( min ( , 3 
+ValStack: 12 
+Action: 9
+OpStack: $ sin ( min ( , 
+ValStack: 12 3 
+Action: 1
+OpStack: $ sin ( min ( , * 
+ValStack: 12 3 
+Action: 1
+OpStack: $ sin ( min ( , * 5 
+ValStack: 12 3 
+Action: 9
+OpStack: $ sin ( min ( , * 
+ValStack: 12 3 5 
+Action: 2
+OpStack: $ sin ( min ( , 15.0 
+ValStack: 12 
+Action: 9
+OpStack: $ sin ( min ( , 
+ValStack: 12 15.0 
+Action: 1
+OpStack: $ sin ( min ( , , 
+ValStack: 12 15.0 
+Action: 1
+OpStack: $ sin ( min ( , , 2 
+ValStack: 12 15.0 
+Action: 9
+OpStack: $ sin ( min ( , , 
+ValStack: 12 15.0 2 
+Action: 1
+OpStack: $ sin ( min ( , , + 
+ValStack: 12 15.0 2 
+Action: 1
+OpStack: $ sin ( min ( , , + 3 
+ValStack: 12 15.0 2 
+Action: 9
+OpStack: $ sin ( min ( , , + 
+ValStack: 12 15.0 2 3 
+Action: 1
+OpStack: $ sin ( min ( , , + ^ 
+ValStack: 12 15.0 2 3 
+Action: 1
+OpStack: $ sin ( min ( , , + ^ 2 
+ValStack: 12 15.0 2 3 
+Action: 9
+OpStack: $ sin ( min ( , , + ^ 
+ValStack: 12 15.0 2 3 2 
+Action: 2
+OpStack: $ sin ( min ( , , + 9.0 
+ValStack: 12 15.0 2 
+Action: 9
+OpStack: $ sin ( min ( , , + 
+ValStack: 12 15.0 2 9.0 
+Action: 2
+OpStack: $ sin ( min ( , , 11.0 
+ValStack: 12 15.0 
+Action: 9
+OpStack: $ sin ( min ( , , 
+ValStack: 12 15.0 11.0 
+Action: 1
+OpStack: $ sin ( min ( , , , 
+ValStack: 12 15.0 11.0 
+Action: 1
+OpStack: $ sin ( min ( , , , 3.14e2 
+ValStack: 12 15.0 11.0 
+Action: 9
+OpStack: $ sin ( min ( , , , 
+ValStack: 12 15.0 11.0 3.14e2 
+Action: 1
+OpStack: $ sin ( min ( , , , ) 
+ValStack: 12 15.0 11.0 3.14e2 
+Action: 4
+OpStack: $ sin ( 11.0 
+ValStack: 
+Action: 9
+OpStack: $ sin ( 
+ValStack: 11.0 
+Action: 1
+OpStack: $ sin ( ) 
+ValStack: 11.0 
+Action: 4
+OpStack: $ -0.9999902065507035 
+ValStack: 
+Action: 9
+OpStack: $ 
+ValStack: -0.9999902065507035 
+Action: 0
+
+C006 Predefined functions.
+Input: sin(min(12, 3 * 5, 2 + 3 ^ 2, 3.14E2))
+Expected output: -0.99999
+Passed !
+OpStack: $ 
+ValStack: 
+Action: 1
+OpStack: $ ( 
+ValStack: 
+Action: 1
+OpStack: $ ( 2 
+ValStack: 
+Action: 9
+OpStack: $ ( 
+ValStack: 2 
+Action: 1
+OpStack: $ ( + 
+ValStack: 2 
+Action: 1
+OpStack: $ ( + 3 
+ValStack: 2 
+Action: 9
+OpStack: $ ( + 
+ValStack: 2 3 
+Action: 2
+OpStack: $ ( 5.0 
+ValStack: 
+Action: 9
+OpStack: $ ( 
+ValStack: 5.0 
+Action: 1
+OpStack: $ ( ) 
+ValStack: 5.0 
+Action: 4
+OpStack: $ 
+ValStack: 5.0 
+Action: 1
+OpStack: $ ^ 
+ValStack: 5.0 
+Action: 1
+OpStack: $ ^ 3 
+ValStack: 5.0 
+Action: 9
+OpStack: $ ^ 
+ValStack: 5.0 3 
+Action: 2
+OpStack: $ 125.0 
+ValStack: 
+Action: 9
+OpStack: $ 
+ValStack: 125.0 
+Action: 1
+OpStack: $ ) 
+ValStack: 125.0 
+Action: 4
+
+E001 Left parenthesis expected.
+Input: (2 + 3) ^ 3) - ((1 + 1)
+Expected output: MissingLeftParenthesisException
+Passed !
+OpStack: $ 
+ValStack: 
+Action: 1
+OpStack: $ ( 
+ValStack: 
+Action: 1
+OpStack: $ ( ( 
+ValStack: 
+Action: 1
+OpStack: $ ( ( 2 
+ValStack: 
+Action: 9
+OpStack: $ ( ( 
+ValStack: 2 
+Action: 1
+OpStack: $ ( ( + 
+ValStack: 2 
+Action: 1
+OpStack: $ ( ( + 3 
+ValStack: 2 
+Action: 9
+OpStack: $ ( ( + 
+ValStack: 2 3 
+Action: 2
+OpStack: $ ( ( 5.0 
+ValStack: 
+Action: 9
+OpStack: $ ( ( 
+ValStack: 5.0 
+Action: 1
+OpStack: $ ( ( ) 
+ValStack: 5.0 
+Action: 4
+OpStack: $ ( 
+ValStack: 5.0 
+Action: 1
+OpStack: $ ( ^ 
+ValStack: 5.0 
+Action: 1
+OpStack: $ ( ^ ( 
+ValStack: 5.0 
+Action: 1
+OpStack: $ ( ^ ( ( 
+ValStack: 5.0 
+Action: 1
+OpStack: $ ( ^ ( ( 3 
+ValStack: 5.0 
+Action: 9
+OpStack: $ ( ^ ( ( 
+ValStack: 5.0 3 
+Action: 1
+OpStack: $ ( ^ ( ( - 
+ValStack: 5.0 3 
+Action: 1
+OpStack: $ ( ^ ( ( - 1 
+ValStack: 5.0 3 
+Action: 9
+OpStack: $ ( ^ ( ( - 
+ValStack: 5.0 3 1 
+Action: 2
+OpStack: $ ( ^ ( ( 2.0 
+ValStack: 5.0 
+Action: 9
+OpStack: $ ( ^ ( ( 
+ValStack: 5.0 2.0 
+Action: 1
+OpStack: $ ( ^ ( ( ) 
+ValStack: 5.0 2.0 
+Action: 4
+OpStack: $ ( ^ ( 
+ValStack: 5.0 2.0 
+Action: 1
+OpStack: $ ( ^ ( + 
+ValStack: 5.0 2.0 
+Action: 1
+OpStack: $ ( ^ ( + 1 
+ValStack: 5.0 2.0 
+Action: 9
+OpStack: $ ( ^ ( + 
+ValStack: 5.0 2.0 1 
+Action: 2
+OpStack: $ ( ^ ( 3.0 
+ValStack: 5.0 
+Action: 9
+OpStack: $ ( ^ ( 
+ValStack: 5.0 3.0 
+Action: 1
+OpStack: $ ( ^ ( ) 
+ValStack: 5.0 3.0 
+Action: 4
+OpStack: $ ( ^ 
+ValStack: 5.0 3.0 
+Action: 2
+OpStack: $ ( 125.0 
+ValStack: 
+Action: 9
+OpStack: $ ( 
+ValStack: 125.0 
+Action: -4
+
+E002 Right parenthesis expected.
+Input: ((2 + 3) ^ ((3 - 1) + 1)
+Expected output: MissingRightParenthesisException
+Passed !
+OpStack: $ 
+ValStack: 
+Action: 1
+OpStack: $ ( 
+ValStack: 
+Action: 1
+OpStack: $ ( 1 
+ValStack: 
+Action: 9
+OpStack: $ ( 
+ValStack: 1 
+Action: 1
+OpStack: $ ( + 
+ValStack: 1 
+Action: 1
+OpStack: $ ( + 2 
+ValStack: 1 
+Action: 9
+OpStack: $ ( + 
+ValStack: 1 2 
+Action: 2
+OpStack: $ ( 3.0 
+ValStack: 
+Action: 9
+OpStack: $ ( 
+ValStack: 3.0 
+Action: 1
+OpStack: $ ( ) 
+ValStack: 3.0 
+Action: 4
+OpStack: $ 
+ValStack: 3.0 
+Action: 1
+OpStack: $ ^ 
+ValStack: 3.0 
+Action: 1
+OpStack: $ ^ ( 
+ValStack: 3.0 
+Action: 1
+OpStack: $ ^ ( 3 
+ValStack: 3.0 
+Action: 9
+OpStack: $ ^ ( 
+ValStack: 3.0 3 
+Action: 1
+OpStack: $ ^ ( - 
+ValStack: 3.0 3 
+Action: 1
+OpStack: $ ^ ( - 4 
+ValStack: 3.0 3 
+Action: 9
+OpStack: $ ^ ( - 
+ValStack: 3.0 3 4 
+Action: 2
+OpStack: $ ^ ( -1.0 
+ValStack: 3.0 
+Action: 9
+OpStack: $ ^ ( 
+ValStack: 3.0 -1.0 
+Action: 1
+OpStack: $ ^ ( ) 
+ValStack: 3.0 -1.0 
+Action: -5
+
+E003 Operator expected.
+Input: (1 + 2) ^ (3 - 4)  5
+Expected output: MissingOperatorException
+Passed !
+OpStack: $ 
+ValStack: 
+Action: 1
+OpStack: $ ( 
+ValStack: 
+Action: 1
+OpStack: $ ( 1 
+ValStack: 
+Action: 9
+OpStack: $ ( 
+ValStack: 1 
+Action: 1
+OpStack: $ ( + 
+ValStack: 1 
+Action: 1
+OpStack: $ ( + 2 
+ValStack: 1 
+Action: 9
+OpStack: $ ( + 
+ValStack: 1 2 
+Action: 2
+OpStack: $ ( 3.0 
+ValStack: 
+Action: 9
+OpStack: $ ( 
+ValStack: 3.0 
+Action: 1
+OpStack: $ ( ) 
+ValStack: 3.0 
+Action: 4
+OpStack: $ 
+ValStack: 3.0 
+Action: 1
+OpStack: $ ^ 
+ValStack: 3.0 
+Action: 1
+OpStack: $ ^ ( 
+ValStack: 3.0 
+Action: 1
+OpStack: $ ^ ( 3 
+ValStack: 3.0 
+Action: 9
+OpStack: $ ^ ( 
+ValStack: 3.0 3 
+Action: 1
+OpStack: $ ^ ( - 
+ValStack: 3.0 3 
+Action: 2
+OpStack: $ ^ ( 0.0 
+ValStack: 
+Action: 9
+OpStack: $ ^ ( 
+ValStack: 0.0 
+Action: 1
+OpStack: $ ^ ( ) 
+ValStack: 0.0 
+Action: 4
+OpStack: $ ^ 
+ValStack: 0.0 
+Action: 2
+
+E004 Operand expected.
+Input: (1 + 2) ^ (3 - ) + 5
+Expected output: MissingOperandException
+Passed !
+OpStack: $ 
+ValStack: 
+Action: 1
+OpStack: $ 4 
+ValStack: 
+Action: 9
+OpStack: $ 
+ValStack: 4 
+Action: 1
+OpStack: $ / 
+ValStack: 4 
+Action: 1
+OpStack: $ / ( 
+ValStack: 4 
+Action: 1
+OpStack: $ / ( 12 
+ValStack: 4 
+Action: 9
+OpStack: $ / ( 
+ValStack: 4 12 
+Action: 1
+OpStack: $ / ( - 
+ValStack: 4 12 
+Action: 1
+OpStack: $ / ( - 3 
+ValStack: 4 12 
+Action: 9
+OpStack: $ / ( - 
+ValStack: 4 12 3 
+Action: 1
+OpStack: $ / ( - * 
+ValStack: 4 12 3 
+Action: 1
+OpStack: $ / ( - * 4 
+ValStack: 4 12 3 
+Action: 9
+OpStack: $ / ( - * 
+ValStack: 4 12 3 4 
+Action: 2
+OpStack: $ / ( - 12.0 
+ValStack: 4 12 
+Action: 9
+OpStack: $ / ( - 
+ValStack: 4 12 12.0 
+Action: 2
+OpStack: $ / ( 0.0 
+ValStack: 4 
+Action: 9
+OpStack: $ / ( 
+ValStack: 4 0.0 
+Action: 1
+OpStack: $ / ( ) 
+ValStack: 4 0.0 
+Action: 4
+OpStack: $ / 
+ValStack: 4 0.0 
+Action: 2
+
+E005 Divided by 0.
+Input: 4 / (12 - 3 * 4) + 1
+Expected output: DividedByZeroException
+Passed !
+OpStack: $ 
+ValStack: 
+Action: 1
+OpStack: $ ( 
+ValStack: 
+Action: 1
+OpStack: $ ( 13 
+ValStack: 
+Action: 9
+OpStack: $ ( 
+ValStack: 13 
+Action: 1
+OpStack: $ ( < 
+ValStack: 13 
+Action: 1
+OpStack: $ ( < 2 
+ValStack: 13 
+Action: 9
+OpStack: $ ( < 
+ValStack: 13 2 
+Action: 1
+OpStack: $ ( < * 
+ValStack: 13 2 
+Action: 1
+OpStack: $ ( < * 5 
+ValStack: 13 2 
+Action: 9
+OpStack: $ ( < * 
+ValStack: 13 2 5 
+Action: 2
+OpStack: $ ( < 10.0 
+ValStack: 13 
+Action: 9
+OpStack: $ ( < 
+ValStack: 13 10.0 
+Action: 8
+OpStack: $ ( false 
+ValStack: 
+Action: 9
+OpStack: $ ( 
+ValStack: false 
+Action: 1
+OpStack: $ ( ) 
+ValStack: false 
+Action: 4
+OpStack: $ 
+ValStack: false 
+Action: 1
+OpStack: $ + 
+ValStack: false 
+Action: 1
+OpStack: $ + 12 
+ValStack: false 
+Action: 9
+OpStack: $ + 
+ValStack: false 12 
+Action: 2
+
+E006 Type mismatched.
+Input: (13 < 2 * 5) + 12
+Expected output: TypeMismatchedException
+Passed !
+OpStack: $ 
+ValStack: 
+Action: 1
+OpStack: $ 4 
+ValStack: 
+Action: 9
+OpStack: $ 
+ValStack: 4 
+Action: 1
+
+E007 Scientific Notation Error.
+Input: 4 + 10.E+5 + 1
+Expected output: IllegalDecimalException
+Passed !
+OpStack: $ 
+ValStack: 
+Action: 1
+OpStack: $ 4 
+ValStack: 
+Action: 9
+OpStack: $ 
+ValStack: 4 
+Action: 1
+
+E008 Not a predefined identifier.
+Input: 4 + mix(5, 2) + 1
+Expected output: IllegalIdentifierException
+Passed !
+OpStack: $ 
+ValStack: 
+Action: 1
+OpStack: $ sin 
+ValStack: 
+Action: 1
+OpStack: $ sin ( 
+ValStack: 
+Action: 1
+OpStack: $ sin ( 2 
+ValStack: 
+Action: 9
+OpStack: $ sin ( 
+ValStack: 2 
+Action: 1
+OpStack: $ sin ( , 
+ValStack: 2 
+Action: 1
+OpStack: $ sin ( , 1 
+ValStack: 2 
+Action: 9
+OpStack: $ sin ( , 
+ValStack: 2 1 
+Action: 1
+OpStack: $ sin ( , ) 
+ValStack: 2 1 
+Action: 4
+
+E009 Function call error.
+Input: sin(2, 1)
+Expected output: FunctionCallException
+Passed !
+OpStack: $ 
+ValStack: 
+Action: 1
+OpStack: $ min 
+ValStack: 
+Action: 1
+OpStack: $ min ( 
+ValStack: 
+Action: 1
+OpStack: $ min ( 2.5 
+ValStack: 
+Action: 9
+OpStack: $ min ( 
+ValStack: 2.5 
+Action: 1
+OpStack: $ min ( ) 
+ValStack: 2.5 
+Action: 4
+
+E010 Function call error.
+Input: min(2.5)
+Expected output: MissingOperandException
+Passed !
+
+--------------------------------------------------------
+Statistics Report (16 test cases):
+
+	Passed case(s): 16 (100.0%)
+	Warning case(s): 0 (0.0%)
+	Failed case(s): 0 (0.0%)
+========================================================
+
